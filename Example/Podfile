@@ -1,0 +1,14 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'Logsene_Example', :exclusive => true do
+  pod 'Logsene', :path => '../'
+  pod 'CocoaLumberjack/Swift'
+end
+
+target 'Logsene_Tests', :exclusive => true do
+  pod 'Logsene', :path => '../'
+
+  pod 'Quick', '~> 0.8'
+  pod 'Nimble', '~> 3.0'
+end
