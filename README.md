@@ -16,7 +16,7 @@ Logsene for iOS Applications
 Getting Started
 ---------------
 
-1. Logsene is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
+1. Logsene log shipping library for iOS is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod "Logsene"
@@ -123,7 +123,7 @@ We don't include the LogseneLogger in the pod, but you can find the [implementat
 
 ### NSLog
 
-We provide a mechanism for intercepting NSLog messages and sending them to Logsene. We use undocumented apis to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Logsene, call `LLogNSLogMessages()` just after `LogseneInit()`.
+We provide a mechanism for intercepting NSLog messages and sending them to Logsene. We use undocumented APIs to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Logsene, call `LLogNSLogMessages()` just after `LogseneInit()`.
 
 
 ### How to log unhandled exceptions
