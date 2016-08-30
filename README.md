@@ -63,14 +63,14 @@ LLogEvent(["event": "level_completed", "message": "Level 3 completed", "value": 
 
 To visualize the collected data, you would use the [integrated Kibana dashboard][hosted-kibana]. If you're new to Kibana, you can checkout [this video tutorials series][video-tutorials].
 
-If you don't see the events in the dashboard immediately, note that we send the data in batches to preserve the battery (every 60s), or if we have more than 10 messages queued up. We also save the messages while the device is offline, so you don't have to worry about losing any data.
+If you don't see the events in the dashboard immediately, note that this library sends data in batches to preserve the battery (every 60s), or if there are more than 10 messages queued up. Messages are saved while the device is offline, so you don't have to worry about losing any data.
 
-When it comes to the structure of your events, you are free to choose your own, the above is just an example. You can use any number of fields, and you can use nested fields. Basically, any valid JSON object will work fine. Note that we reserve the `meta` field for meta information (see below). If you set a value for this field when sending an event, we will not include any meta information for that event.
+When it comes to the structure of your events, you are free to choose your own, the above is just an example. You can use any number of fields, and you can use nested fields. Basically, any valid JSON object will work fine. Note that the library reserves the `meta` field for meta information (see below). If you set a value for this field when sending an event, no meta information will be included for that event.
 
 Meta Fields
 -----------
 
-We add some predefined meta fields to each event sent to Logsene. The fields are stored inside the "meta" field.
+A few predefined meta fields are included in each event sent to Logsene. The fields are stored inside the "meta" field.
 
 - versionName (app version string, eg. 1.0)
 - versionCode (app build number, eg. 92)
@@ -119,11 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-We don't include the LogseneLogger in the pod, but you can find the [implementation here](Example/Logsene/Logger.swift). Feel free to use it in your own project.
+LogseneLogger is not included in the pod, but you can find the [implementation here](Example/Logsene/Logger.swift). Feel free to use it in your own project.
 
 ### NSLog
 
-We provide a mechanism for intercepting NSLog messages and sending them to Logsene. We use undocumented APIs to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Logsene, call `LLogNSLogMessages()` just after `LogseneInit()`.
+The library provides a mechanism for intercepting NSLog messages and sending them to Logsene. It uses undocumented APIs to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Logsene, call `LLogNSLogMessages()` just after `LogseneInit()`.
 
 
 ### How to log unhandled exceptions
