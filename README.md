@@ -6,7 +6,7 @@
 Logsene for iOS Applications
 =============================
 
-[![CI Status](http://img.shields.io/travis/Amir Hadzic/Logsene.svg?style=flat)](https://travis-ci.org/Amir Hadzic/Logsene)
+[![CI Status](http://img.shields.io/travis/sematext/sematext-logsene-ios.svg?style=flat)](https://travis-ci.org/sematext/sematext-logsene-ios)
 [![Version](https://img.shields.io/cocoapods/v/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
 [![License](https://img.shields.io/cocoapods/l/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
 [![Platform](https://img.shields.io/cocoapods/p/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
