@@ -1,12 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'Logsene_Example', :exclusive => true do
+target 'Logsene_Example' do
   pod 'Logsene', :path => '../'
   pod 'CocoaLumberjack/Swift'
 end
 
-target 'Logsene_Tests', :exclusive => true do
+target 'Logsene_Tests' do
   pod 'Logsene', :path => '../'
 
   pod 'Quick', '~> 0.8'
