@@ -17,9 +17,9 @@ func _NSLogCStringFunction() -> NSLogCStringFunc?
     - Parameters:
         - logToConsole: If set to true, messages will be logged with print() as well.
 */
-public func LLogNSLogMessages(logToConsole: Bool = true) {
+public func LLogNSLogMessages(_ logToConsole: Bool = true) {
     _NSSetLogCStringFunction() { (cstr, length, syslogBanner) in
-        if let message = String.fromCString(cstr) {
+        if let message = String(validatingUTF8: cstr) {
             print("nslog: \(message)")
             LLogInfo(message)
         }

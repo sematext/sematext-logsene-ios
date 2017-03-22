@@ -6,11 +6,11 @@ class BulkIndex {
         self.documents = documents
     }
 
-    func toBody(index: String) -> String {
+    func toBody(_ index: String) -> String {
         var body = ""
         for document in documents {
             body += "{ \"index\" : { \"_index\": \"\(index)\", \"_type\" : \"\(document.type)\" } }\n"
-            body += document.source.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) + "\n"
+            body += document.source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n"
         }
         return body
     }
@@ -18,43 +18,43 @@ class BulkIndex {
 
 /// Basic promise implementation.
 class Promise<T> {
-    private var successCb: ((T) -> ())?
-    private var failureCb: ((NSError?, NSHTTPURLResponse?, NSData?) -> ())?
-    private var alwaysCb: (() -> ())?
-    private let semaphore = dispatch_semaphore_create(0)
-    private let semaphoreTimeout: NSTimeInterval?
+    fileprivate var successCb: ((T) -> ())?
+    fileprivate var failureCb: ((NSError?, HTTPURLResponse?, Data?) -> ())?
+    fileprivate var alwaysCb: (() -> ())?
+    fileprivate let semaphore = DispatchSemaphore(value: 0)
+    fileprivate let semaphoreTimeout: TimeInterval?
 
     init() {
         self.semaphoreTimeout = nil
     }
 
-    init(semaphoreTimeout: NSTimeInterval) {
+    init(semaphoreTimeout: TimeInterval) {
         self.semaphoreTimeout = semaphoreTimeout
     }
 
-    func finish(obj: T) {
+    func finish(_ obj: T) {
         successCb?(obj)
         alwaysCb?()
-        dispatch_semaphore_signal(semaphore)
+        semaphore.signal()
     }
 
-    func raiseError(error: NSError?, response: NSHTTPURLResponse? = nil, data: NSData? = nil) {
+    func raiseError(_ error: NSError?, response: HTTPURLResponse? = nil, data: Data? = nil) {
         failureCb?(error, response, data)
         alwaysCb?()
-        dispatch_semaphore_signal(semaphore)
+        semaphore.signal()
     }
 
-    func success(successCb: (T) -> ()) -> Promise<T> {
+    func success(_ successCb: @escaping (T) -> ()) -> Promise<T> {
         self.successCb = successCb;
         return self
     }
 
-    func failure(failureCb: (NSError?, NSHTTPURLResponse?, NSData?) -> ()) -> Promise<T> {
+    func failure(_ failureCb: @escaping (NSError?, HTTPURLResponse?, Data?) -> ()) -> Promise<T> {
         self.failureCb = failureCb
         return self
     }
 
-    func always(alwaysCb: () -> ()) -> Promise<T> {
+    func always(_ alwaysCb: @escaping () -> ()) -> Promise<T> {
         self.alwaysCb = alwaysCb
         return self
     }
@@ -62,9 +62,9 @@ class Promise<T> {
     /// Waits until either the promise is finished, or an error is raised.
     func wait() {
         if let timeout = semaphoreTimeout {
-            dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * Double(NSEC_PER_SEC))))
+            semaphore.wait(timeout: DispatchTime.now() + Double(Int64(timeout * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC))
         } else {
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            semaphore.wait(timeout: DispatchTime.distantFuture)
         }
     }
 }
@@ -74,8 +74,8 @@ class Promise<T> {
 class LogseneClient {
     let receiverUrl: String
     let appToken: String
-    let session: NSURLSession
-    let configuration: NSURLSessionConfiguration
+    let session: URLSession
+    let configuration: URLSessionConfiguration
 
     /**
         Initializes the client.
@@ -84,11 +84,11 @@ class LogseneClient {
             - receiverUrl: The url of the logsene receiver.
             - appToken: Your logsene app token.
     */
-    init(receiverUrl: String, appToken: String, configuration: NSURLSessionConfiguration) {
+    init(receiverUrl: String, appToken: String, configuration: URLSessionConfiguration) {
         self.receiverUrl = LogseneClient.cleanReceiverUrl(receiverUrl)
         self.appToken = appToken
         self.configuration = configuration
-        self.session = NSURLSession(configuration: configuration)
+        self.session = URLSession(configuration: configuration)
     }
 
     /**
@@ -97,53 +97,53 @@ class LogseneClient {
         - Parameters:
             - bulkIndex: The bulk index request.
     */
-    func execute(bulkIndex: BulkIndex) -> Promise<JsonObject> {
-        let request = prepareRequest(NSURL(string: "\(receiverUrl)/_bulk")!, method: "POST")
-        request.HTTPBody = bulkIndex.toBody(appToken).dataUsingEncoding(NSUTF8StringEncoding)
-        return execute(request)
+    func execute(_ bulkIndex: BulkIndex) -> Promise<JsonObject> {
+        let request = prepareRequest(URL(string: "\(receiverUrl)/_bulk")!, method: "POST")
+        request.httpBody = bulkIndex.toBody(appToken).data(using: String.Encoding.utf8)
+        return execute(request as URLRequest)
     }
 
-    private func execute(request: NSURLRequest) -> Promise<JsonObject> {
+    fileprivate func execute(_ request: URLRequest) -> Promise<JsonObject> {
         let promise = Promise<JsonObject>(semaphoreTimeout: self.configuration.timeoutIntervalForResource)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (maybeData, maybeResponse, maybeError) in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (maybeData, maybeResponse, maybeError) in
             if let error = maybeError {
-                promise.raiseError(error, response: maybeResponse as? NSHTTPURLResponse)
+                promise.raiseError(error as NSError?, response: maybeResponse as? HTTPURLResponse)
                 return
             }
 
-            if let response = maybeResponse as? NSHTTPURLResponse {
+            if let response = maybeResponse as? HTTPURLResponse {
                 // if status code not in success range (200-299), fail the promise
                 if response.statusCode < 200 || response.statusCode > 299  {
-                    promise.raiseError(maybeError, response: response, data: maybeData)
+                    promise.raiseError(maybeError as NSError?, response: response, data: maybeData)
                     return
                 }
             }
 
             if let data = maybeData {
-                if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())) as? JsonObject {
+                if let jsonObject = (try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions())) as? JsonObject {
                     promise.finish(jsonObject)
                 } else {
                     NSLog("Couldn't deserialize json response, returning empty json object instead")
                     return promise.finish([:])
                 }
             }
-        }
+        }) 
         task.resume()
         return promise
     }
 
-    private func prepareRequest(url: NSURL, method: String) -> NSMutableURLRequest {
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(receiverUrl)/_bulk")!)
-        request.HTTPMethod = method
+    fileprivate func prepareRequest(_ url: URL, method: String) -> NSMutableURLRequest {
+        let request = NSMutableURLRequest(url: URL(string: "\(receiverUrl)/_bulk")!)
+        request.httpMethod = method
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         return request
     }
 
-    private class func cleanReceiverUrl(url: String) -> String {
-        let cleaned = url.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    fileprivate class func cleanReceiverUrl(_ url: String) -> String {
+        let cleaned = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if cleaned.hasSuffix("/") {
-            return cleaned.substringToIndex(cleaned.endIndex.advancedBy(-1))
+            return cleaned.substring(to: cleaned.characters.index(cleaned.endIndex, offsetBy: -1))
         } else {
             return cleaned
         }

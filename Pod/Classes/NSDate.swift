@@ -1,13 +1,13 @@
 import Foundation
 
-public extension NSDate {
+public extension Date {
 
     /// Returns a string timestamp suitable for use in Logsene `@timestamp` field.
     func logseneTimestamp() -> String {
-        let dateFormatter = NSDateFormatter()
-        let enUSPosixLocale = NSLocale(localeIdentifier: "en_US_POSIX")
+        let dateFormatter = DateFormatter()
+        let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
         dateFormatter.locale = enUSPosixLocale
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        return dateFormatter.stringFromDate(self)
+        return dateFormatter.string(from: self)
     }
 }
