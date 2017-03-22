@@ -1,13 +1,13 @@
 import Foundation
 
 /// Alias for dictionary String:AnyObject, but must be a valid json object (enforced in LLogEvent()).
-public typealias JsonObject = [String: AnyObject]
+public typealias JsonObject = [String: Any]
 
 /// Holds static information.
 struct Logsene {
     static var worker: Worker?
     static var onceToken = NSUUID().uuidString
-    static var defaultMeta: [String: AnyObject]?
+    static var defaultMeta: [String: Any]?
 }
 
 /**
@@ -80,59 +80,59 @@ public func LLogEvent(_ event: JsonObject) {
 
 /// Logs a simple message with `level` set to `info`.
 public func LLogInfo(_ message: String) {
-    LLogEvent(["level": "info" as AnyObject, "message": message as AnyObject])
+    LLogEvent(["level": "info", "message": message])
 }
 
 /// Logs a simple message with `level` set to `warn`.
 public func LLogWarn(_ message: String) {
-    LLogEvent(["level": "warn" as AnyObject, "message": message as AnyObject])
+    LLogEvent(["level": "warn", "message": message])
 }
 
 /// Logs a simple message with `level` set to `error`.
 public func LLogError(_ message: String) {
-    LLogEvent(["level": "error" as AnyObject, "message": message as AnyObject])
+    LLogEvent(["level": "error", "message": message])
 }
 
 /// Logs an error.
 public func LLogError(_ error: Error) {
-    LLogEvent(["level": "error" as AnyObject, "message": "\(error)" as AnyObject])
+    LLogEvent(["level": "error", "message": "\(error)"])
 }
 
 /// Logs an error.
 public func LLogDebug(_ error: Error) {
-    LLogEvent(["level": "debug" as AnyObject, "message": "\(error)" as AnyObject])
+    LLogEvent(["level": "debug", "message": "\(error)"])
 }
 
 /// Logs an error.
 public func LLogError(_ error: NSError) {
-    LLogEvent(["level": "error" as AnyObject, "message": "\(error.localizedDescription)" as AnyObject, "errorCode": error.code as AnyObject])
+    LLogEvent(["level": "error", "message": "\(error.localizedDescription)", "errorCode": error.code])
 }
 
 /// Logs an error.
 public func LLogError(_ error: NSException) {
-    LLogEvent(["level": "error" as AnyObject, "message": error.description as AnyObject, "exceptionName": error.name as AnyObject, "exceptionReason": "\(error.reason)" as AnyObject])
+    LLogEvent(["level": "error", "message": error.description, "exceptionName": error.name, "exceptionReason": "\(error.reason)"])
 }
 
 /// Enriches the event with meta information.
 private func enrichEvent(_ event: inout JsonObject) {
     if event["@timestamp"] == nil {
-        event["@timestamp"] = Date().logseneTimestamp() as AnyObject?
+        event["@timestamp"] = Date().logseneTimestamp()
     }
 
     if event["meta"] == nil {
         var meta: JsonObject = [:]
         if let infoDictionary = Bundle.main.infoDictionary {
-            meta["versionName"] = infoDictionary["CFBundleShortVersionString"]! as AnyObject?
-            meta["versionCode"] = infoDictionary["CFBundleVersion"]! as AnyObject?
+            meta["versionName"] = infoDictionary["CFBundleShortVersionString"]!
+            meta["versionCode"] = infoDictionary["CFBundleVersion"]!
         }
         let os = ProcessInfo.processInfo.operatingSystemVersion
-        meta["osRelease"] = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)" as AnyObject?
-        meta["uuid"] = UIDevice.current.identifierForVendor!.uuidString as AnyObject?
+        meta["osRelease"] = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
+        meta["uuid"] = UIDevice.current.identifierForVendor!.uuidString
         if let defaultMeta = Logsene.defaultMeta {
             for (key, value) in defaultMeta {
                 meta[key] = value
             }
         }
-        event["meta"] = meta as AnyObject?
+        event["meta"] = meta
     }
 }
