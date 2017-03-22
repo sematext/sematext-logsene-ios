@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "Logsene"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "Logsene is ELK as a Service. This library lets you collect mobile analytics and log data from your iOS applications using Logsene."
 
   s.description      = <<-DESC
