@@ -35,5 +35,5 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'SQLite.swift', '~> 0.10.1'
+  s.dependency 'SQLite.swift', '~> 0.11.2'
 end
