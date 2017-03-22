@@ -16,13 +16,13 @@ class LogseneLogger: DDAbstractLogger {
         }
 
         LLogEvent([
-            "@timestamp": logMessage.timestamp.logseneTimestamp() as AnyObject,
-            "level": LogseneLogger.formatLogLevel(logMessage.flag) as AnyObject,
-            "fileName": logMessage.fileName as AnyObject,
-            "line": logMessage.line as AnyObject,
-            "message": message as AnyObject,
-            "threadID": logMessage.threadID as AnyObject,
-            "threadName": logMessage.threadName as AnyObject
+            "@timestamp": logMessage.timestamp.logseneTimestamp(),
+            "level": LogseneLogger.formatLogLevel(logMessage.flag),
+            "fileName": logMessage.fileName,
+            "line": logMessage.line,
+            "message": message,
+            "threadID": logMessage.threadID,
+            "threadName": logMessage.threadName
         ])
     }
 
