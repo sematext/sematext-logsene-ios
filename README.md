@@ -11,7 +11,7 @@ Logsene for iOS Applications
 [![License](https://img.shields.io/cocoapods/l/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
 [![Platform](https://img.shields.io/cocoapods/p/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
 
-[Logsene is ELK as a Service][logsene]. This library lets you collect **mobile analytics** and **log data** from your iOS applications using Logsene. If you don't have a Logsene account, you can [register for free][register] to get your app token.
+[Sematext Logs is ELK as a Service][logsene]. This library lets you collect **mobile analytics** and **log data** from your iOS applications using Sematext. There is an equivalent library for [shipping logs from Android](https://github.com/sematext/sematext-logsene-android) available. If you don't have a Sematext account, you can [register for free][register] to get your App token.
 
 Getting Started
 ---------------
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-You can optionaly provide the `receiverUrl` parameter if you are using Logsene On Premises, and `maxOfflineMessages` to configure how many messages are stored while device is offline (5,000 by default).
+You can optionaly provide the `receiverUrl` parameter if you are using [Sematext Enterprise](https://sematext.com/enterprise), and `maxOfflineMessages` to configure how many messages are stored while device is offline (5,000 by default).
 
 **Note**: We highly recommend creating a write-only token in your application settings for use in your mobile apps.
 
@@ -55,7 +55,7 @@ Make sure to set your own application token in `AppDelegate.swift`.
 Mobile Application Analytics
 ----------------------------
 
-You can collect application analytics using Logsene. To do that, use the `LLogEvent()` function to send custom events. For example, you might want to send an event each time the user completes a game level:
+You can collect application analytics using Sematext. To do that, use the `LLogEvent()` function to send custom events. For example, you might want to send an event each time the user completes a game level:
 
 ```swift
 LLogEvent(["event": "level_completed", "message": "Level 3 completed", "value": "3"])
@@ -70,7 +70,7 @@ When it comes to the structure of your events, you are free to choose your own, 
 Meta Fields
 -----------
 
-A few predefined meta fields are included in each event sent to Logsene. The fields are stored inside the "meta" field.
+A few predefined meta fields are included in each event sent to Sematext. The fields are stored inside the "meta" field.
 
 - versionName (app version string, eg. 1.0)
 - versionCode (app build number, eg. 92)
@@ -99,7 +99,7 @@ For integrating with existing logging frameworks, see below.
 
 ### CocoaLumberjack
 
-If you're using CocoaLumberjack for logging, you can use the custom Logsene logger to send log messages to Logsene automatically. You should configure CocoaLumberjack to use the Logsene logger:
+If you're using CocoaLumberjack for logging, you can use the custom Logsene logger to send log messages to Sematext automatically. You should configure CocoaLumberjack to use the Logsene logger:
 
 ```swift
 @UIApplicationMain
@@ -123,7 +123,7 @@ LogseneLogger is not included in the pod, but you can find the [implementation h
 
 ### NSLog
 
-The library provides a mechanism for intercepting NSLog messages and sending them to Logsene. It uses undocumented APIs to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Logsene, call `LLogNSLogMessages()` just after `LogseneInit()`.
+The library provides a mechanism for intercepting NSLog messages and sending them to Sematext. It uses undocumented APIs to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Sematext, call `LLogNSLogMessages()` just after `LogseneInit()`.
 
 
 ### How to log unhandled exceptions
