@@ -1,7 +1,8 @@
-ENV['SWIFT_VERSION'] = '2'
+ENV['SWIFT_VERSION'] = '4'
 
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
+supports_swift_versions '>= 4.0'
 
 target 'Logsene_Example' do
   pod 'Logsene', :path => '../'
