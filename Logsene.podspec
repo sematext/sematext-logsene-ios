@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.author           = { "Sematext Group, Inc." => "pods@sematext.com" }
   s.source           = { :git => "https://github.com/sematext/sematext-logsene-ios.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/sematext'
-  s.swift_versions = ['3.2', '4.0', '4.2', '5.0', '5.1']
+  s.swift_versions   = ['3.2', '4.0', '4.2', '5.0', '5.1']
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
