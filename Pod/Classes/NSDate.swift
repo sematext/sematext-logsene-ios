@@ -7,7 +7,7 @@ public extension NSDate {
         let dateFormatter = NSDateFormatter()
         let enUSPosixLocale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.locale = enUSPosixLocale
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         return dateFormatter.stringFromDate(self)
     }
 }
