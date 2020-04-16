@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0FEC55AC257841D08AAB5729 /* Pods_Logsene_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F451501FD743C6B2509CBB0 /* Pods_Logsene_Tests.framework */; };
+		53903A7DC5A66143D5FC642E /* Pods_Logsene_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 281C3DF4E2C66FC57385F07A /* Pods_Logsene_Tests.framework */; };
 		6065A38E1CAD5EE700F0CA25 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6065A38D1CAD5EE700F0CA25 /* Logger.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -30,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		053A9F33DDEC94EF534B2A13 /* Pods_Logsene_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Logsene_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		281C3DF4E2C66FC57385F07A /* Pods_Logsene_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Logsene_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		468D82CD2B740496DB66D88A /* Pods-Logsene_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Logsene_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		50B54188694C48844243A64F /* Pods-Logsene_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Logsene_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Logsene_Example/Pods-Logsene_Example.release.xcconfig"; sourceTree = "<group>"; };
 		5AEAFDF1A504C4659F1069CF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		6065A38D1CAD5EE700F0CA25 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -44,11 +46,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		63C692F8A5B806EC22A0D371 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		73731B258C7E25829F086D88 /* Pods-Logsene_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Logsene_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		7F451501FD743C6B2509CBB0 /* Pods_Logsene_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Logsene_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDBDA5FD93068F101D2B3E6 /* Pods-Logsene_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Logsene_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Logsene_Example/Pods-Logsene_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		AC1957A7D5873D65E9D14FDF /* Logsene.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Logsene.podspec; path = ../Logsene.podspec; sourceTree = "<group>"; };
-		BB5AA6C8A541F47914C2295A /* Pods-Logsene_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Logsene_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		FC205E7CC460D9302ADF470D /* Pods-Logsene_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Logsene_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FEC55AC257841D08AAB5729 /* Pods_Logsene_Tests.framework in Frameworks */,
+				53903A7DC5A66143D5FC642E /* Pods_Logsene_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				053A9F33DDEC94EF534B2A13 /* Pods_Logsene_Example.framework */,
-				7F451501FD743C6B2509CBB0 /* Pods_Logsene_Tests.framework */,
+				281C3DF4E2C66FC57385F07A /* Pods_Logsene_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -156,8 +156,8 @@
 			children = (
 				9EDBDA5FD93068F101D2B3E6 /* Pods-Logsene_Example.debug.xcconfig */,
 				50B54188694C48844243A64F /* Pods-Logsene_Example.release.xcconfig */,
-				BB5AA6C8A541F47914C2295A /* Pods-Logsene_Tests.debug.xcconfig */,
-				73731B258C7E25829F086D88 /* Pods-Logsene_Tests.release.xcconfig */,
+				468D82CD2B740496DB66D88A /* Pods-Logsene_Tests.debug.xcconfig */,
+				FC205E7CC460D9302ADF470D /* Pods-Logsene_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -174,7 +174,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				6CBA2EBA002723BF1318CFF8 /* [CP] Embed Pods Frameworks */,
-				2CC1F777A5ACED3124673E14 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -189,12 +188,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Logsene_Tests" */;
 			buildPhases = (
-				2C95C556380FC470200E34B5 /* [CP] Check Pods Manifest.lock */,
+				355AB8F7A423ABDE63CF665B /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				BE55A6631530EDD0B88F9FB0 /* [CP] Embed Pods Frameworks */,
-				8F548655B7BD81472CFDAAFC /* [CP] Copy Pods Resources */,
+				25813A81F7D8FC57B290812F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -269,49 +267,64 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		25813A81F7D8FC57B290812F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		26EE9910E426370C191E16E4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Logsene_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2C95C556380FC470200E34B5 /* [CP] Check Pods Manifest.lock */ = {
+		355AB8F7A423ABDE63CF665B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Logsene_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		2CC1F777A5ACED3124673E14 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Logsene_Example/Pods-Logsene_Example-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6CBA2EBA002723BF1318CFF8 /* [CP] Embed Pods Frameworks */ = {
@@ -320,43 +333,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Logsene_Example/Pods-Logsene_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/Logsene/Logsene.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Logsene.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Logsene_Example/Pods-Logsene_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8F548655B7BD81472CFDAAFC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BE55A6631530EDD0B88F9FB0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Logsene_Tests/Pods-Logsene_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Logsene_Example/Pods-Logsene_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -414,6 +404,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9EDBDA5FD93068F101D2B3E6 /* Pods-Logsene_Example.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -471,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50B54188694C48844243A64F /* Pods-Logsene_Example.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -521,7 +513,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9EDBDA5FD93068F101D2B3E6 /* Pods-Logsene_Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -541,7 +533,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50B54188694C48844243A64F /* Pods-Logsene_Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -559,9 +551,9 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BB5AA6C8A541F47914C2295A /* Pods-Logsene_Tests.debug.xcconfig */;
+			baseConfigurationReference = 468D82CD2B740496DB66D88A /* Pods-Logsene_Tests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 7Q3457MWCS;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -583,9 +575,9 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73731B258C7E25829F086D88 /* Pods-Logsene_Tests.release.xcconfig */;
+			baseConfigurationReference = FC205E7CC460D9302ADF470D /* Pods-Logsene_Tests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 7Q3457MWCS;
 				FRAMEWORK_SEARCH_PATHS = (
