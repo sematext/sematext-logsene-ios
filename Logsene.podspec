@@ -26,5 +26,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.source_files = 'Logsene/Classes/**/*'
   
+  s.swift_versions = ['4.0', '4.2', '5.0']
+  
   s.dependency 'SQLite.swift', '~> 0.12.2'
 end
