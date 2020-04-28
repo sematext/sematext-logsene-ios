@@ -144,8 +144,8 @@ class LogseneClient {
     fileprivate class func cleanReceiverUrl(_ url: String) -> String {
         let cleaned = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if cleaned.hasSuffix("/") {
-            
-            return cleaned.substring(to: cleaned.index(cleaned.endIndex, offsetBy: -1))
+            let endIndex = cleaned.index(cleaned.endIndex, offsetBy: -1)
+            return String(cleaned[...endIndex])
         } else {
             return cleaned
         }
