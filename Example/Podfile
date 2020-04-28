@@ -1,22 +1,16 @@
-platform :ios, '8.0'
-ENV['SWIFT_VERSION'] = '4'
+use_frameworks!
 
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
-inhibit_all_warnings!
-supports_swift_versions '4.2'
-
-def logsene_pods 
-  pod 'Logsene', :path => '../', :swift_version => '3.2'
-end
 
 target 'Logsene_Example' do
-  logsene_pods
-  pod 'CocoaLumberjack/Swift', '3.2'
-end
+  pod 'Logsene', :path => '../'
+  pod 'CocoaLumberjack/Swift'
 
-target 'Logsene_Tests' do
-  use_frameworks!
-  pod 'Quick', '1.0.0'
-  pod 'Nimble', '5.0.0' 
+  target 'Logsene_Tests' do
+    inherit! :search_paths
+
+    pod 'Quick', '~> 1.2.0'
+    pod 'Nimble', '~> 7.0'
+  end
 end

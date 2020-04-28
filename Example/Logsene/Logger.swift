@@ -11,7 +11,7 @@ class LogseneLogger: DDAbstractLogger {
 
         // See https://github.com/CocoaLumberjack/CocoaLumberjack/issues/643
         let ivar = class_getInstanceVariable(object_getClass(self), "_logFormatter")
-        if let formatter = object_getIvar(self, ivar) as? DDLogFormatter {
+        if let formatter = object_getIvar(self, ivar!) as? DDLogFormatter {
             message = formatter.format(message: logMessage)!
         }
 
@@ -22,7 +22,7 @@ class LogseneLogger: DDAbstractLogger {
             "line": logMessage.line,
             "message": message,
             "threadID": logMessage.threadID,
-            "threadName": logMessage.threadName
+            "threadName": logMessage.threadName ?? "undefined"
         ])
     }
 
