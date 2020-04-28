@@ -9,10 +9,10 @@
 Pod::Spec.new do |s|
   s.name             = 'Logsene'
   s.version          = '1.1.0'
-  s.summary          = 'Logsene is ELK as a Service. This library lets you collect mobile analytics and log data from your iOS applications using Logsene.'
+  s.summary          = 'Sematext Cloud Logs is ELK as a Service. This library lets you collect mobile analytics and log data from your iOS applications using Sematext Cloud Logs.'
 
   s.description      = <<-DESC
-  Logsene is ELK as a Service. This library lets you collect mobile analytics and log data from your iOS applications using Logsene. If you don't have a Logsene account, you can register for free to get your app token.
+  Sematext Cloud Logs is ELK as a Service. This library lets you collect mobile analytics and log data from your iOS applications using Sematext Cloud Logs. If you don't have a Sematext Cloud account, you can register for free to get your app token.
 
   The focus of the library is mobile analytics, but it can be used for centralized logging as well.
                        DESC
