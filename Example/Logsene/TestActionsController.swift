@@ -1,15 +1,16 @@
 import UIKit
+import Foundation
 import AudioToolbox
 import Logsene
 
-enum MyErrors: ErrorType {
-    case NotImplementedError
+enum MyErrors: Error {
+    case notImplementedError
 }
 
 extension MyErrors: CustomStringConvertible {
     var description: String {
         switch self {
-        case .NotImplementedError:
+        case .notImplementedError:
             return "This is not implemented yet"
         }
     }
@@ -20,12 +21,12 @@ class TestActionsController: UITableViewController {
         super.viewDidLoad()
     }
 
-    @IBAction func logMessageTap(sender: AnyObject) {
+    @IBAction func logMessageTap(_ sender: AnyObject) {
         AudioServicesPlaySystemSound(1105)
         LLogInfo("Logging an info message")
     }
 
-    @IBAction func logExceptionTap(sender: AnyObject) {
+    @IBAction func logExceptionTap(_ sender: AnyObject) {
         AudioServicesPlaySystemSound(1105)
         do {
             // always fails
@@ -35,13 +36,13 @@ class TestActionsController: UITableViewController {
         }
     }
 
-    @IBAction func logWithNSLog(sender: AnyObject) {
+    @IBAction func logWithNSLog(_ sender: AnyObject) {
         AudioServicesPlaySystemSound(1105)
         NSLog("Logging with NSLog")
     }
 
 
     func failWithError() throws {
-        throw MyErrors.NotImplementedError
+        throw MyErrors.notImplementedError
     }
 }

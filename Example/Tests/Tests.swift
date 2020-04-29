@@ -6,6 +6,5 @@ import Logsene
 
 class TableOfContentsSpec: QuickSpec {
     override func spec() {
-
     }
 }

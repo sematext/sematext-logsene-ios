@@ -6,13 +6,13 @@ import CocoaLumberjack
     Logsene logger for CocoaLumberjack.
 */
 class LogseneLogger: DDAbstractLogger {
-    override func logMessage(logMessage: DDLogMessage!) {
+    override func log(message logMessage: DDLogMessage) {
         var message = logMessage.message
 
         // See https://github.com/CocoaLumberjack/CocoaLumberjack/issues/643
         let ivar = class_getInstanceVariable(object_getClass(self), "_logFormatter")
-        if let formatter = object_getIvar(self, ivar) as? DDLogFormatter {
-            message = formatter.formatLogMessage(logMessage)
+        if let formatter = object_getIvar(self, ivar!) as? DDLogFormatter {
+            message = formatter.format(message: logMessage)!
         }
 
         LLogEvent([
@@ -22,21 +22,21 @@ class LogseneLogger: DDAbstractLogger {
             "line": logMessage.line,
             "message": message,
             "threadID": logMessage.threadID,
-            "threadName": logMessage.threadName
+            "threadName": logMessage.threadName ?? "undefined"
         ])
     }
 
-    private class func formatLogLevel(level: DDLogFlag) -> String {
+    fileprivate class func formatLogLevel(_ level: DDLogFlag) -> String {
         switch level {
-        case DDLogFlag.Debug:
+        case DDLogFlag.debug:
             return "debug"
-        case DDLogFlag.Error:
+        case DDLogFlag.error:
             return "error"
-        case DDLogFlag.Info:
+        case DDLogFlag.info:
             return "info"
-        case DDLogFlag.Verbose:
+        case DDLogFlag.verbose:
             return "verbose"
-        case DDLogFlag.Warning:
+        case DDLogFlag.warning:
             return "warn"
         default:
             return "other"

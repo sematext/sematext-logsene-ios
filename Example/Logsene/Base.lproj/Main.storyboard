@@ -1,119 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xgA-Rt-Cus">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Test actions-->
-        <scene sceneID="qHj-WL-I78">
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <tableViewController title="Test actions" id="txM-q4-iZv" customClass="TestActionsController" customModule="Logsene_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jNc-7q-Pp4">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <sections>
-                            <tableViewSection id="Jfi-hu-7b6">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="JSc-TQ-Npj">
-                                        <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JSc-TQ-Npj" id="f8c-UT-QBT">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKG-3b-zQA">
-                                                    <rect key="frame" x="0.0" y="1" width="600" height="43"/>
-                                                    <state key="normal" title="Log a simple message"/>
-                                                    <connections>
-                                                        <action selector="logMessageTap:" destination="txM-q4-iZv" eventType="touchUpInside" id="4zT-Oy-g7W"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="ZKG-3b-zQA" firstAttribute="height" secondItem="f8c-UT-QBT" secondAttribute="height" id="KM5-Yh-rxc"/>
-                                                <constraint firstItem="ZKG-3b-zQA" firstAttribute="width" secondItem="f8c-UT-QBT" secondAttribute="width" id="NDQ-d6-ZiQ"/>
-                                                <constraint firstItem="ZKG-3b-zQA" firstAttribute="centerX" secondItem="f8c-UT-QBT" secondAttribute="centerX" id="NUv-Ab-gSn"/>
-                                                <constraint firstItem="ZKG-3b-zQA" firstAttribute="centerY" secondItem="f8c-UT-QBT" secondAttribute="centerY" id="SQd-LJ-rtH"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6Dh-Ud-4y4">
-                                        <rect key="frame" x="0.0" y="108" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Dh-Ud-4y4" id="GUd-s1-eI7">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quJ-pf-zfX">
-                                                    <rect key="frame" x="0.0" y="1" width="600" height="43"/>
-                                                    <state key="normal" title="Log an exception"/>
-                                                    <connections>
-                                                        <action selector="logExceptionTap:" destination="txM-q4-iZv" eventType="touchUpInside" id="QSU-yq-uOk"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="quJ-pf-zfX" firstAttribute="centerX" secondItem="GUd-s1-eI7" secondAttribute="centerX" id="E0N-mI-RrJ"/>
-                                                <constraint firstItem="quJ-pf-zfX" firstAttribute="width" secondItem="GUd-s1-eI7" secondAttribute="width" id="RNa-eO-Yfj"/>
-                                                <constraint firstItem="quJ-pf-zfX" firstAttribute="height" secondItem="GUd-s1-eI7" secondAttribute="height" id="n6e-8u-Pti"/>
-                                                <constraint firstItem="quJ-pf-zfX" firstAttribute="centerY" secondItem="GUd-s1-eI7" secondAttribute="centerY" id="zR6-dB-Drp"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="W3e-o4-Tav">
-                                        <rect key="frame" x="0.0" y="152" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W3e-o4-Tav" id="g5H-wb-HwD">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FUb-cg-qsn">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                                    <state key="normal" title="Log message with NSLog"/>
-                                                    <connections>
-                                                        <action selector="logWithNSLog:" destination="txM-q4-iZv" eventType="touchUpInside" id="jsd-yK-zvW"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="FUb-cg-qsn" firstAttribute="centerY" secondItem="g5H-wb-HwD" secondAttribute="centerY" id="LCj-xf-RC5"/>
-                                                <constraint firstItem="FUb-cg-qsn" firstAttribute="height" secondItem="g5H-wb-HwD" secondAttribute="height" id="eBy-q0-bDy"/>
-                                                <constraint firstItem="FUb-cg-qsn" firstAttribute="width" secondItem="g5H-wb-HwD" secondAttribute="width" id="eUn-Yj-r4s"/>
-                                                <constraint firstItem="FUb-cg-qsn" firstAttribute="centerX" secondItem="g5H-wb-HwD" secondAttribute="centerX" id="p7H-QB-CL8"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="txM-q4-iZv" id="iEE-KY-jIp"/>
-                            <outlet property="delegate" destination="txM-q4-iZv" id="TEl-P0-dZx"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Test actions" id="OBJ-Wl-OHU"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aOd-Qw-cbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Logsene_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1276" y="673"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="3JZ-jD-n4M">
-            <objects>
-                <navigationController id="xgA-Rt-Cus" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RaJ-io-VBc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="txM-q4-iZv" kind="relationship" relationship="rootViewController" id="ra5-Nj-wse"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZWq-ag-rBD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="544" y="673"/>
         </scene>
     </scenes>
 </document>

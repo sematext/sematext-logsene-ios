@@ -6,56 +6,58 @@ import Foundation
  Events queued while offline will be saved to disk and sent later.
  */
 class Worker {
-    private let maxBatchSize = 50
-    private let minBatchSize = 10
-    private let timeTriggerSec: UInt64 = 60
-    private let preflightBuffer: SqliteObjectBuffer
-    private let serialQueue: dispatch_queue_t
-    private let timer: dispatch_source_t
-    private let client: LogseneClient
-    private let type: String
-    private let reach: LReachability
-    private let isOnline = true
+    fileprivate let maxBatchSize = 50
+    fileprivate let minBatchSize = 10
+    fileprivate let timeTriggerSec = 60
+    fileprivate let preflightBuffer: SqliteObjectBuffer
+    fileprivate let serialQueue: DispatchQueue
+    fileprivate let timer: DispatchSourceTimer
+    fileprivate let client: LogseneClient
+    fileprivate let type: String
+    fileprivate let reach: Reachability
+    fileprivate var isOnline: Bool = true
 
     init(client: LogseneClient, type: String, maxOfflineMessages: Int) throws {
         self.client = client
         self.type = type
-        serialQueue = dispatch_queue_create("logworker_events", DISPATCH_QUEUE_SERIAL)
-        reach = try LReachability.reachabilityForInternetConnection()
+        serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
+        reach = Reachability()!
 
         // Setup sqlite buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
-        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         preflightBuffer = try SqliteObjectBuffer(filePath: "\(path)/logsene.sqlite3", size: maxOfflineMessages)
 
         // creates a timer for sending data every 60s (will tick once right away to send previously buffered data)
-        timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, serialQueue)
-        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeTriggerSec * NSEC_PER_SEC, 1 * NSEC_PER_SEC);
-        dispatch_source_set_event_handler(timer) {
+        timer = DispatchSource.makeTimerSource(queue: serialQueue)
+        timer.schedule(deadline: .now(), repeating: .seconds(timeTriggerSec), leeway: .seconds(1))
+        
+        timer.setEventHandler {
             do {
                 try self.handleTimerTick()
             } catch let err {
                 NSLog("Error while handling timer tick: \(err)")
             }
         }
-        dispatch_resume(timer)
+        timer.resume()
 
         // Setup Reachability to notify when device is online/offline
         reach.whenReachable = { (reach) in
-            dispatch_async(self.serialQueue) {
+            self.serialQueue.async {
                 self.isOnline = true
             }
         }
         reach.whenUnreachable = { (reach) in
-            dispatch_async(self.serialQueue) {
+            self.serialQueue.async {
                 self.isOnline = false
             }
         }
+        
         try reach.startNotifier()
     }
 
-    func addToQueue(event: JsonObject) {
-        dispatch_async(serialQueue) {
+    func addToQueue(_ event: JsonObject) {
+        serialQueue.async {
             do {
                 try self.handleNewEvent(event)
             } catch let err {
@@ -64,7 +66,7 @@ class Worker {
         }
     }
 
-    private func handleNewEvent(event: JsonObject) throws {
+    fileprivate func handleNewEvent(_ event: JsonObject) throws {
         try preflightBuffer.add(event)
         
         if preflightBuffer.count >= minBatchSize && isOnline {
@@ -72,19 +74,18 @@ class Worker {
         }
     }
 
-    private func handleTimerTick() throws {
+    fileprivate func handleTimerTick() throws {
         if isOnline {
             try sendInBatches()
         }
     }
 
     /// Invalidates the timer, pushing the next tick by *timeTriggerSec* seconds.
-    private func invalidateTimer() {
-        let newTime = dispatch_time(DISPATCH_TIME_NOW, Int64(timeTriggerSec * NSEC_PER_SEC))
-        dispatch_source_set_timer(timer, newTime, timeTriggerSec * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
+    fileprivate func invalidateTimer() {
+        timer.schedule(deadline: .now() + .seconds(timeTriggerSec), repeating: .seconds(timeTriggerSec), leeway: .seconds(1))
     }
 
-    private func sendInBatches() throws {
+    fileprivate func sendInBatches() throws {
         while preflightBuffer.count > 0 {
             let batch = try preflightBuffer.peek(maxBatchSize)
             if sendBatch(batch) {
@@ -96,7 +97,7 @@ class Worker {
         }
     }
 
-    private func sendBatch(batch: [JsonObject]) -> Bool {
+    fileprivate func sendBatch(_ batch: [JsonObject]) -> Bool {
         var documents: [(source: String, type: String)] = []
         for source in batch {
             documents.append((source: String(jsonObject: source)!, type: type))
@@ -105,14 +106,14 @@ class Worker {
         return attemptExecute(BulkIndex(documents: documents), attempts: 3)
     }
 
-    private func attemptExecute(bulkIndex: BulkIndex, attempts: Int) -> Bool {
+    fileprivate func attemptExecute(_ bulkIndex: BulkIndex, attempts: Int) -> Bool {
         guard attempts > 0 else { return false }
 
         var success = false
         var online = true
         client.execute(bulkIndex).success { (result) in
             // `errors` can be either boolean (false) or number (eg. 3), so we need to parse that
-            if let errors = result["errors"] where NSString(string: "\(errors)").boolValue {
+            if let errors = result["errors"], NSString(string: "\(errors)").boolValue {
                 let response = String(jsonObject: result)!
                 NSLog("Unable to index all documents. Got response: \(response)")
             }
@@ -128,7 +129,7 @@ class Worker {
                 NSLog("Unable to send request: \(error)")
             }
             if let response = maybeResponse {
-                NSLog("Non-success status code received from logsene receiver: \(response.statusCode), response:\n\(maybeData)")
+                NSLog("Non-success status code received from logsene receiver: \(response.statusCode), response:\n\(String(describing: maybeData))")
             }
         }.wait()
 
