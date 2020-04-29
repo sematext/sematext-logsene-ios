@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.add(DDTTYLogger.sharedInstance!)
         DDLog.add(LogseneLogger())
         DDLogInfo("hello world from CocoaLumberjack!")
+        
+        // Try sending log message with location
+        let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
+        LLogInfo(withMessage: "This is a test message with location", withLocation: location)
         return true
     }
 

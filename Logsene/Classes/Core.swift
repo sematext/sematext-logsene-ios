@@ -11,6 +11,17 @@ struct Logsene {
     static var defaultMeta: [String: Any]?
 }
 
+/// Holds information about latitude and longitude
+public class LogsLocation {
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    
+    public init(fromLatitude latitude: Double, fromLongitude longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+}
+
 /**
     Initializes the Logsene framework.
 
@@ -84,9 +95,19 @@ public func LLogInfo(_ message: String) {
     LLogEvent(["level": "info", "message": message])
 }
 
+/// Logs a simple message with `level` set to `info` and including location.
+public func LLogInfo(withMessage message: String, withLocation location: LogsLocation) {
+    LLogEvent(["level": "info", "message": message, "lat": location.latitude, "lon": location.longitude])
+}
+
 /// Logs a simple message with `level` set to `warn`.
 public func LLogWarn(_ message: String) {
     LLogEvent(["level": "warn", "message": message])
+}
+
+/// Logs a simple message with `level` set to `warn` and including location.
+public func LLogWarn(withMessage message: String, withLocation location: LogsLocation) {
+    LLogEvent(["level": "warn", "message": message, "lat": location.latitude, "lon": location.longitude])
 }
 
 /// Logs a simple message with `level` set to `error`.
@@ -94,9 +115,19 @@ public func LLogError(_ message: String) {
     LLogEvent(["level": "error", "message": message])
 }
 
+/// Logs a simple message with `level` set to `error` and including location.
+public func LLogError(withMessage message: String, withLocation location: LogsLocation) {
+    LLogEvent(["level": "error", "message": message, "lat": location.latitude, "lon": location.longitude])
+}
+
 /// Logs an error.
 public func LLogError(_ error: Error) {
     LLogEvent(["level": "error", "message": "\(error)"])
+}
+
+/// Logs an error with location.
+public func LLogError(withError error: Error, withLocation location: LogsLocation) {
+    LLogEvent(["level": "error", "message": "\(error)", "lat": location.latitude, "lon": location.longitude])
 }
 
 /// Logs an error.
@@ -104,14 +135,29 @@ public func LLogDebug(_ error: Error) {
     LLogEvent(["level": "debug", "message": "\(error)"])
 }
 
+/// Logs an error with debug level with location.
+public func LLogDebug(withError error: Error, withLocation location: LogsLocation) {
+    LLogEvent(["level": "debug", "message": "\(error)", "lat": location.latitude, "lon": location.longitude])
+}
+
 /// Logs an error.
 public func LLogError(_ error: NSError) {
     LLogEvent(["level": "error", "message": "\(error.localizedDescription)", "errorCode": error.code])
 }
 
+/// Logs an error with location.
+public func LLogError(withError error: NSError, withLocation location: LogsLocation) {
+    LLogEvent(["level": "error", "message": "\(error.localizedDescription)", "errorCode": error.code, "lat": location.latitude, "lon": location.longitude])
+}
+
 /// Logs an error.
 public func LLogError(_ error: NSException) {
     LLogEvent(["level": "error", "message": error.description, "exceptionName": error.name, "exceptionReason": "\(String(describing: error.reason))"])
+}
+
+/// Logs an error with location.
+public func LLogError(withError error: NSException, withLocation location: LogsLocation) {
+    LLogEvent(["level": "error", "message": error.description, "exceptionName": error.name, "exceptionReason": "\(String(describing: error.reason))", "lat": location.latitude, "lon": location.longitude])
 }
 
 /// Enriches the event with meta information.
@@ -135,5 +181,14 @@ private func enrichEvent(_ event: inout JsonObject) {
             }
         }
         event["meta"] = meta
+    }
+    
+    // if location is defined read it and create a new location entry in the event
+    if event["lat"] != nil && event["lon"] != nil {
+        let lat: Double = event["lat"] as! Double
+        let lon: Double = event["lon"] as! Double
+        event.removeValue(forKey: "lat")
+        event.removeValue(forKey: "lon")
+        event["location"] = "\(lat),\(lon)"
     }
 }

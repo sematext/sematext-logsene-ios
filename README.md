@@ -95,6 +95,20 @@ The library offers some basic functions for centralized logging:
 - LLogWarn
 - LLogError
 
+Each function provides two variants - logging a message or error without and with the device location. 
+
+Example of writing a log message without a location:
+
+```
+DDLogInfo("hello world!")
+```
+
+Example of writing a log message with location:
+
+```
+
+```
+
 For integrating with existing logging frameworks, see below.
 
 ### CocoaLumberjack
