@@ -33,8 +33,9 @@ public class LogsLocation {
         - receiverUrl: The receiver url (optional).
         - maxOfflineMessages: The maximum number of messages (5,000 by default) stored while device is offline (optional).
         - automaticLocationEnriching: When set to true the library will automatically enrich log events with location of the user (optional, false by default).
+        - useLocationOnlyInForeground: When set to true the location data will only be used when the application is in foreground (optional, true by default).
 */
-public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000, automaticLocationEnriching: Boolean = false) throws {
+public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000, automaticLocationEnriching: Bool = false, useLocationOnlyInForeground: Bool = true) throws {
     var maybeError: Error? = nil
     DispatchQueue.once(token: Logsene.onceToken) {
         let client = LogseneClient(receiverUrl: receiverUrl, appToken: appToken, configuration: URLSessionConfiguration.default)
