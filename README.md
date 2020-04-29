@@ -97,13 +97,13 @@ The library offers some basic functions for centralized logging:
 
 Each function provides two variants - logging a message or error without and with the device location. 
 
-Example of writing a log message without a location:
+Example of writing a log message:
 
 ```
 DDLogInfo("hello world!")
 ```
 
-Example of writing a log message with location:
+Example of writing a log message with location data:
 
 ```
 let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
