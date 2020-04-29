@@ -106,7 +106,8 @@ DDLogInfo("hello world!")
 Example of writing a log message with location:
 
 ```
-
+let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
+LLogInfo(withMessage: "This is a test message with location", withLocation: location)
 ```
 
 For integrating with existing logging frameworks, see below.
