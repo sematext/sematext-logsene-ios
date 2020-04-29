@@ -107,7 +107,7 @@ Example of writing a log message with location data:
 
 ```
 let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
-LLogInfo(withMessage: "This is a test message with location", withLocation: location)
+LLogInfo(withMessage: "hello world with location!", withLocation: location)
 ```
 
 For integrating with existing logging frameworks, see below.
