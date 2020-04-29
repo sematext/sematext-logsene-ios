@@ -32,8 +32,9 @@ public class LogsLocation {
         - type: The Elasticsearch type to use for all events.
         - receiverUrl: The receiver url (optional).
         - maxOfflineMessages: The maximum number of messages (5,000 by default) stored while device is offline (optional).
+        - automaticLocationEnriching: When set to true the library will automatically enrich log events with location of the user (optional, false by default).
 */
-public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000) throws {
+public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000, automaticLocationEnriching: Boolean = false) throws {
     var maybeError: Error? = nil
     DispatchQueue.once(token: Logsene.onceToken) {
         let client = LogseneClient(receiverUrl: receiverUrl, appToken: appToken, configuration: URLSessionConfiguration.default)
@@ -44,6 +45,10 @@ public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = 
             maybeError = err
         }
     }
+    if (automaticLocationEnriching) {
+        ///TODO: setup automatic logs enriching
+    }
+    
     if let error = maybeError {
         throw error
     }
