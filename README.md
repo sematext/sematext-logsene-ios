@@ -95,6 +95,37 @@ The library offers some basic functions for centralized logging:
 - LLogWarn
 - LLogError
 
+Each function provides two variants - logging a message or error without and with the device location. 
+
+Example of writing a log message:
+
+```swift
+DDLogInfo("hello world!")
+```
+
+Example of writing a log message with location data:
+
+```swift
+let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
+LLogInfo(withMessage: "hello world with location!", withLocation: location)
+```
+
+#### Automatically enrich logs with location data 
+
+If you would like to allow the library to automatically enrich log data with the location data it is as easy as properly initializing the library, for example:
+
+```swift
+LogseneInit("<yourtoken>", type: "example", automaticLocationEnriching: true, useLocationOnlyInForeground: true)
+```
+
+There are two properties here:
+ * **automaticLocationEnriching** - when set to true the library will try to enrich the logs with location information,
+ * **useLocationOnlyInForeground** - when set to true the location will only be gathered when the application is in forground.
+ 
+ In addition to setting up the **LogseneInit** properly you also need to ensure to include two additonal string values in the **Info.plist** file that will be diplayed when asking the user to allow location data to be gathered. Those aree:
+ * **Privacy - Location Always and When In Use Usage Description** 
+ * **Privacy - Location When In Use Usage Description**
+
 For integrating with existing logging frameworks, see below.
 
 ### CocoaLumberjack

@@ -35,5 +35,9 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This will be displayed to user when asking for permision to always gather location data.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This will be displayed to user when asking for permision to gather location data when active.</string>
 </dict>
 </plist>
