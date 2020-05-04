@@ -40,14 +40,11 @@ public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = 
     DispatchQueue.once(token: Logsene.onceToken) {
         let client = LogseneClient(receiverUrl: receiverUrl, appToken: appToken, configuration: URLSessionConfiguration.default)
         do {
-            Logsene.worker = try Worker(client: client, type: type, maxOfflineMessages: maxOfflineMessages)
+            Logsene.worker = try Worker(client: client, type: type, maxOfflineMessages: maxOfflineMessages, automaticLocationEnriching: automaticLocationEnriching, useLocationOnlyInForeground: useLocationOnlyInForeground)
         } catch (let err) {
             NSLog("Unable to initialize Logsene worker: \(err)")
             maybeError = err
         }
-    }
-    if (automaticLocationEnriching) {
-        ///TODO: setup automatic logs enriching
     }
     
     if let error = maybeError {
@@ -88,7 +85,11 @@ public func LLogEvent(_ event: JsonObject) {
     precondition(JSONSerialization.isValidJSONObject(event), "event must be a valid json object.")
     if let worker = Logsene.worker {
         var enrichedEvent = event
-        enrichEvent(&enrichedEvent)
+        if worker.locationEnabled {
+            enrichEvent(withEvent: &enrichedEvent, withLocationSet: worker.locationSet, withLatitude: worker.currentLatitude ?? 0.0, withLongitude: worker.currentLongitude ?? 0.0)
+        } else {
+            enrichEvent(&enrichedEvent)
+        }
         worker.addToQueue(enrichedEvent)
     } else {
         // TODO: do we make this a precondition?
@@ -196,5 +197,12 @@ private func enrichEvent(_ event: inout JsonObject) {
         event.removeValue(forKey: "lat")
         event.removeValue(forKey: "lon")
         event["location"] = "\(lat),\(lon)"
+    }
+}
+
+private func enrichEvent(withEvent event: inout JsonObject, withLocationSet locationSet: Bool, withLatitude latitude: Double, withLongitude longitude: Double) {
+    enrichEvent(&event)
+    if locationSet {
+        event["location"] = "\(latitude),\(longitude)"
     }
 }

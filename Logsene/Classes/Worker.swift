@@ -1,25 +1,30 @@
 import Foundation
+import CoreLocation
 
 /**
  Handles uploading of data in batches to Logsene.
 
  Events queued while offline will be saved to disk and sent later.
  */
-class Worker {
+class Worker: NSObject {
+    var locationEnabled: Bool = false
+    var locationSet: Bool = false
+    var currentLatitude: Double? = 0.0
+    var currentLongitude: Double? = 0.0
+    
     fileprivate let maxBatchSize = 50
     fileprivate let minBatchSize = 10
     fileprivate let timeTriggerSec = 60
     fileprivate let preflightBuffer: SqliteObjectBuffer
     fileprivate let serialQueue: DispatchQueue
-    fileprivate let timer: DispatchSourceTimer
+    fileprivate var timer: DispatchSourceTimer
     fileprivate let client: LogseneClient
     fileprivate let type: String
     fileprivate let reach: Reachability
     fileprivate var isOnline: Bool = true
-
-    init(client: LogseneClient, type: String, maxOfflineMessages: Int) throws {
-        self.client = client
-        self.type = type
+    fileprivate var locationManager: CLLocationManager? = nil
+    
+    init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool) throws {
         serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
         reach = Reachability()!
 
@@ -28,10 +33,30 @@ class Worker {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         preflightBuffer = try SqliteObjectBuffer(filePath: "\(path)/logsene.sqlite3", size: maxOfflineMessages)
 
+        self.client = client
+        self.type = type
+        
         // creates a timer for sending data every 60s (will tick once right away to send previously buffered data)
         timer = DispatchSource.makeTimerSource(queue: serialQueue)
         timer.schedule(deadline: .now(), repeating: .seconds(timeTriggerSec), leeway: .seconds(1))
         
+        // initialize NSObject
+        super.init()
+        
+        // setup location manager if needed
+        if automaticLocationEnriching {
+            self.locationManager = CLLocationManager()
+            self.locationManager?.delegate = self
+            self.locationEnabled = true
+            if useLocationOnlyInForeground {
+                self.locationManager?.requestWhenInUseAuthorization()
+            } else {
+                self.locationManager?.requestAlwaysAuthorization()
+            }
+            self.readInitialLocation()
+        }
+        
+        // setup the timer
         timer.setEventHandler {
             do {
                 try self.handleTimerTick()
@@ -138,5 +163,36 @@ class Worker {
         }
 
         return success
+    }
+}
+
+extension Worker: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        NSLog("Setting location to %d %d", Double(visit.coordinate.latitude),  Double(visit.coordinate.longitude))
+        self.locationSet = true
+        self.currentLatitude = Double(visit.coordinate.latitude)
+        self.currentLongitude = Double(visit.coordinate.longitude)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if locations.first != nil {
+            self.currentLatitude = locations.first?.coordinate.latitude.datatypeValue
+            self.currentLongitude = locations.first?.coordinate.longitude.datatypeValue
+            if (self.currentLongitude != 0.0 && self.currentLatitude != 0.0) {
+                self.locationSet = true
+            }
+        }
+
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("Unable to get location data: \(error.localizedDescription)")
+    }
+    
+    func readInitialLocation() {
+        NSLog("Reading initial location")
+        if #available(iOS 9.0, *) {
+            self.locationManager?.requestLocation()
+        }
     }
 }
