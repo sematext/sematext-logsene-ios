@@ -152,11 +152,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 LogseneLogger is not included in the pod, but you can find the [implementation here](Example/Logsene/Logger.swift). Feel free to use it in your own project.
 
-### NSLog
-
-The library provides a mechanism for intercepting NSLog messages and sending them to Sematext. It uses undocumented APIs to accomplish this, so you should probably use CocaLumberjack instead. To send all NSLog messages to Sematext, call `LLogNSLogMessages()` just after `LogseneInit()`.
-
-
 ### How to log unhandled exceptions
 
 You can log any unhandled Foundation exceptions by defining your own uncaught exception handler. For example:
