@@ -43,7 +43,9 @@ class Worker: NSObject {
         // initialize NSObject
         super.init()
         
-        // setup location manager if needed
+        // setup location manager if needed - this should be done only for iOS
+        #if os(macOS)
+        #else
         if automaticLocationEnriching {
             self.locationManager = CLLocationManager()
             self.locationManager?.delegate = self
@@ -55,6 +57,7 @@ class Worker: NSObject {
             }
             self.readInitialLocation()
         }
+        #endif
         
         // setup the timer
         timer.setEventHandler {
@@ -167,14 +170,19 @@ class Worker: NSObject {
 }
 
 extension Worker: CLLocationManagerDelegate {
+    #if os(macOS)
+    #else
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         NSLog("Setting location to %d %d", Double(visit.coordinate.latitude),  Double(visit.coordinate.longitude))
         self.locationSet = true
         self.currentLatitude = Double(visit.coordinate.latitude)
         self.currentLongitude = Double(visit.coordinate.longitude)
     }
+    #endif
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        #if os(macOS)
+        #else
         if locations.first != nil {
             self.currentLatitude = locations.first?.coordinate.latitude.datatypeValue
             self.currentLongitude = locations.first?.coordinate.longitude.datatypeValue
@@ -182,7 +190,7 @@ extension Worker: CLLocationManagerDelegate {
                 self.locationSet = true
             }
         }
-
+        #endif
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -190,9 +198,12 @@ extension Worker: CLLocationManagerDelegate {
     }
     
     func readInitialLocation() {
+        #if os(macOS)
+        #else
         NSLog("Reading initial location")
         if #available(iOS 9.0, *) {
             self.locationManager?.requestLocation()
         }
+        #endif
     }
 }

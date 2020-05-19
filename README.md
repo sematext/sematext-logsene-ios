@@ -110,7 +110,7 @@ let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
 LLogInfo(withMessage: "hello world with location!", withLocation: location)
 ```
 
-#### Automatically enrich logs with location data 
+#### Automatically enrich logs with location data on iOS
 
 If you would like to allow the library to automatically enrich log data with the location data it is as easy as properly initializing the library, for example:
 
@@ -125,6 +125,8 @@ There are two properties here:
  In addition to setting up the **LogseneInit** properly you also need to ensure to include two additonal string values in the **Info.plist** file that will be diplayed when asking the user to allow location data to be gathered. Those aree:
  * **Privacy - Location Always and When In Use Usage Description** 
  * **Privacy - Location When In Use Usage Description**
+
+**Automatic location enriching only works with iOS, not MacOS.** 
 
 For integrating with existing logging frameworks, see below.
 
