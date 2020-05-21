@@ -1,4 +1,8 @@
 import Foundation
+#if os(macOS)
+#else
+import UIKit
+#endif
 
 /// Alias for dictionary String:AnyObject, but must be a valid json object (enforced in LLogEvent()).
 public typealias JsonObject = [String: Any]
