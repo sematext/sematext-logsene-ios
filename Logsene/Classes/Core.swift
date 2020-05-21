@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 /// Alias for dictionary String:AnyObject, but must be a valid json object (enforced in LLogEvent()).
 public typealias JsonObject = [String: Any]
@@ -25,7 +24,7 @@ public class LogsLocation {
 /**
     Initializes the Logsene framework.
 
-    You will most likely want to call this from your application delegate in [application:didFinishLaunchingWithOptions:](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIApplicationDelegate_Protocol/index.html#//apple_ref/occ/intfm/UIApplicationDelegate/application:didFinishLaunchingWithOptions:)
+    You will most likely want to call this from your application delegate in [application:didFinishLaunchingWithOptions:]
 
     - Parameters:
         - appToken: Your Logsene application token.
