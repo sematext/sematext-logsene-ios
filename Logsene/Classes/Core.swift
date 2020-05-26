@@ -186,7 +186,9 @@ private func enrichEvent(_ event: inout JsonObject) {
         let os = ProcessInfo.processInfo.operatingSystemVersion
         meta["osRelease"] = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
         #if os(macOS)
+        meta["osType"] = "MacOS"
         #else
+        meta["osType"] = "iOS"
         meta["uuid"] = UIDevice.current.identifierForVendor!.uuidString
         #endif
         if let defaultMeta = Logsene.defaultMeta {
