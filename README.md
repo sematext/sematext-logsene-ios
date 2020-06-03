@@ -76,6 +76,7 @@ A few predefined meta fields are included in each event sent to Sematext. The fi
 - versionCode (app build number, eg. 92)
 - osRelease (iOS version, eg. 9.3.0)
 - uuid (device identifier)
+- OS type (iOS)
 
 You can set your own meta fields with `LogseneSetDefaultMeta`. For example:
 
@@ -84,6 +85,23 @@ LogseneSetDefaultMeta(["user": "user@example.com", "plan": "free"])
 ```
 
 Note that these meta fields are global, and will be attached to every event sent to Logsene.
+
+Pausing & Resuming Logs Sending
+----------------------------------------
+
+The library can be instructed to stop sending logs on demand. To do that you need to call the following function:
+
+```swift
+LogsenePauseSendingLogs()
+```
+
+Logs sending can be resumed by calling the following function:
+
+```swift
+LogseneResumeSendingLogs()
+```
+
+Note that the logs that are in the buffer and were waiting to be sent at the time of pausing will not be sent until the logs sending process is resumed. 
 
 Centralized Logging
 -------------------

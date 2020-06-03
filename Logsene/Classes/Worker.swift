@@ -22,6 +22,7 @@ class Worker: NSObject {
     fileprivate let type: String
     fileprivate let reach: Reachability
     fileprivate var isOnline: Bool = true
+    fileprivate var isActive: Bool = true
     fileprivate var locationManager: CLLocationManager? = nil
     
     init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool) throws {
@@ -93,17 +94,25 @@ class Worker: NSObject {
             }
         }
     }
+    
+    func resume() {
+        self.isActive = true
+    }
+    
+    func pause() {
+        self.isActive = false
+    }
 
     fileprivate func handleNewEvent(_ event: JsonObject) throws {
         try preflightBuffer.add(event)
         
-        if preflightBuffer.count >= minBatchSize && isOnline {
+        if preflightBuffer.count >= minBatchSize && isOnline && isActive {
             try sendInBatches()
         }
     }
 
     fileprivate func handleTimerTick() throws {
-        if isOnline {
+        if isOnline && isActive {
             try sendInBatches()
         }
     }

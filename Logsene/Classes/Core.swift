@@ -79,6 +79,22 @@ public func LogseneSetDefaultMeta(_ meta: JsonObject?) {
 }
 
 /**
+    Pauses sending logs until ```LogseneResumeSendingLogs()``` is called.
+*/
+public func LogsenePauseSendingLogs() {
+    NSLog("Pausing the logs sending process")
+    Logsene.worker?.pause()
+}
+
+/**
+    Resumes paused logs sending.
+*/
+public func LogseneResumeSendingLogs() {
+    NSLog("Resuming the logs sending process")
+    Logsene.worker?.resume();
+}
+
+/**
     Logs an event.
 
     The event can be any valid json document.
