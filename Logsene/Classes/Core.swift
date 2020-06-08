@@ -221,7 +221,9 @@ private func enrichEvent(_ event: inout JsonObject) {
         let lon: Double = event["lon"] as! Double
         event.removeValue(forKey: "lat")
         event.removeValue(forKey: "lon")
-        event["location"] = "\(lat),\(lon)"
+        var geoip: JsonObject = [:]
+        geoip["location"] = "\(lat),\(lon)"
+        event["geoip"] = geoip
     }
 }
 
