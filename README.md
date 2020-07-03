@@ -13,6 +13,28 @@ Logsene for iOS Applications
 
 [Sematext Logs is ELK as a Service][logsene]. This library lets you collect **mobile analytics** and **log data** from your iOS applications using Sematext. There is an equivalent library for [shipping logs from Android](https://github.com/sematext/sematext-logsene-android) available. If you don't have a Sematext account, you can [register for free][register] to get your App token.
 
+Use the **Mobile Application Logs** Integration to get out-of-the-box reports with the most important information about your mobile applications.
+
+Get an overview of your mobile apps with information like:
+ - top iOS versions
+ - top log severities and version names
+
+![Mobile Logpack Overview](images/mobile_overview.png)
+
+Explore the common errors associated with your mobile applications and see an aggregated error view including:
+ - number of errors and theirs count over time
+ - top operating systems, top iOS versions that are reporting errors
+ - error log events
+
+![Mobile Logpack Errors](images/mobile_errors.png)
+
+Get insights from dedicated iOS report that include:
+ - mobile operating system logs count histogram and their count
+ - top severities, versions, version codes, and version names
+ - mobile applications log events
+
+![Mobile Logpack iOS](images/mobile_ios.png)
+
 Getting Started
 ---------------
 
