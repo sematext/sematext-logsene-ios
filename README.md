@@ -3,7 +3,7 @@
 [hosted-kibana]: https://sematext.com/docs/logs/kibana/
 [video-tutorials]: https://www.elastic.co/blog/kibana-4-video-tutorials-part-1
 
-Logsene for iOS Applications
+SDK for Shipping iOS Application Logs to Sematext
 =============================
 
 [![CI Status](http://img.shields.io/travis/sematext/sematext-logsene-ios.svg?style=flat)](https://travis-ci.org/sematext/sematext-logsene-ios)
