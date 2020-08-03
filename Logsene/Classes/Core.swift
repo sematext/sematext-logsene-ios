@@ -110,6 +110,10 @@ public func LLogEvent(_ event: JsonObject) {
         } else {
             enrichEvent(&enrichedEvent)
         }
+        // check if the log level is set and if it is not set it to INFO
+        if enrichedEvent["level"] == nil {
+            enrichedEvent["level"] = "info"
+        }
         worker.addToQueue(enrichedEvent)
     } else {
         // TODO: do we make this a precondition?
