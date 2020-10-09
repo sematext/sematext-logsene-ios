@@ -3,7 +3,7 @@ import Foundation
 /**
  Buffers documents to local database with a fixed size.
  */
-class EventObjectBuffer {
+class LogsEventObjectBuffer {
     let size: Int
     var _count: Int?
 
