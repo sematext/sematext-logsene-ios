@@ -124,10 +124,10 @@ class Worker: NSObject {
 
     fileprivate func sendInBatches() throws {
         while preflightBuffer.count > 0 {
-            let batch = try preflightBuffer.peek(maxBatchSize)
-            if sendBatch(batch) {
+            let batch = preflightBuffer.peek(maxBatchSize)
+            if batch != nil && sendBatch(batch!) {
                 invalidateTimer()
-                try preflightBuffer.remove(batch.count)
+                preflightBuffer.remove(batch!.count)
             } else {
                 return
             }

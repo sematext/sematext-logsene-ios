@@ -5,13 +5,13 @@ import Foundation
  */
 class LogsEventObjectBuffer {
     let size: Int
-    var _count: Int?
+    var docs: Queue<JsonObject>
 
     /**
         Returns the number of objects in the buffer.
     */
     var count: Int {
-        return 0
+        return docs.count
     }
 
     /**
@@ -23,25 +23,33 @@ class LogsEventObjectBuffer {
     */
     init(filePath: String, size: Int) throws {
         self.size = size
+        self.docs = Queue<JsonObject>()
     }
 
     /**
         Adds another json object to the buffer.
     */
-    func add(_ obj: JsonObject) throws {
-    
+    func add(_ obj: JsonObject) {
+        if docs.count > size {
+            let above = size - docs.count
+            self.remove(above)
+        }
+        docs.enqueue(obj)
     }
 
     /**
         Reads up to `max` objects from the buffer in FIFO order.
     */
-    func peek(_ max: Int) throws -> [JsonObject] {
-        return []
+    func peek(_ max: Int) -> [JsonObject]? {
+        return docs.peekN(max)
     }
 
     /**
         Removes up to `max` oldest objects.
     */
-    func remove(_ max: Int) throws {
+    func remove(_ max: Int) {
+        for _ in 1...max {
+           _ = docs.dequeue()
+        }
     }
 }
