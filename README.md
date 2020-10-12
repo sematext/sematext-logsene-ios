@@ -125,6 +125,19 @@ LogseneResumeSendingLogs()
 
 Note that the logs that are in the buffer and were waiting to be sent at the time of pausing will not be sent until the logs sending process is resumed. 
 
+Buffered data file
+----------------------------------------
+
+By default the library writes the data to a file called ```logsene.wal``` which stores the raw log messages. It is suggested to force writing of the file when the application is being terminated by calling the ```LogseneTerminate()``` function:
+
+```swift
+func applicationWillTerminate(_ application: UIApplication) {
+    LogseneTerminate()
+}
+```
+If you want to write each and every log event to the file you can run the ```LogseneInit``` function with the ```syncFileSync``` attribute set to ```true```. However this may result in high number of writes to the file system and may affect performance.
+
+
 Centralized Logging
 -------------------
 
