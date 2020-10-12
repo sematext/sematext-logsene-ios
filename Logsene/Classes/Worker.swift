@@ -25,14 +25,14 @@ class Worker: NSObject {
     fileprivate var isActive: Bool = true
     fileprivate var locationManager: CLLocationManager? = nil
     
-    init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool) throws {
+    init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool, syncFileSync: Bool) throws {
         serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
         reach = Reachability()!
 
-        // Setup sqlite buffer for storing messages before sending them to Logsene
+        // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        preflightBuffer = try LogsEventObjectBuffer(filePath: "\(path)/logsene.sqlite3", size: maxOfflineMessages)
+        preflightBuffer = try LogsEventObjectBuffer(filePath: "\(path)/logsene.wal", size: maxOfflineMessages, syncFileSync: syncFileSync)
 
         self.client = client
         self.type = type
@@ -104,7 +104,7 @@ class Worker: NSObject {
     }
 
     fileprivate func handleNewEvent(_ event: JsonObject) throws {
-        try preflightBuffer.add(event)
+        preflightBuffer.add(event)
         
         if preflightBuffer.count >= minBatchSize && isOnline && isActive {
             try sendInBatches()

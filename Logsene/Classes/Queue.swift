@@ -31,6 +31,10 @@ struct Queue<T> {
         }
     }
     
+    func peekAt(_ index: Int) -> T {
+        return list[index]
+    }
+    
     var isEmpty: Bool {
         return list.isEmpty
     }

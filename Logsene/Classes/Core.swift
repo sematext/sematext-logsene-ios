@@ -38,13 +38,14 @@ public class LogsLocation {
         - maxOfflineMessages: The maximum number of messages (5,000 by default) stored while device is offline (optional).
         - automaticLocationEnriching: When set to true the library will automatically enrich log events with location of the user (optional, false by default).
         - useLocationOnlyInForeground: When set to true the location data will only be used when the application is in foreground (optional, true by default).
+        - syncFileSync: When set to true the write ahead file is written with every list add/remove (optional, false by default).
 */
-public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000, automaticLocationEnriching: Bool = false, useLocationOnlyInForeground: Bool = true) throws {
+public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000, automaticLocationEnriching: Bool = false, useLocationOnlyInForeground: Bool = true, syncFileSync: Bool = false) throws {
     var maybeError: Error? = nil
     DispatchQueue.once(token: Logsene.onceToken) {
         let client = LogseneClient(receiverUrl: receiverUrl, appToken: appToken, configuration: URLSessionConfiguration.default)
         do {
-            Logsene.worker = try Worker(client: client, type: type, maxOfflineMessages: maxOfflineMessages, automaticLocationEnriching: automaticLocationEnriching, useLocationOnlyInForeground: useLocationOnlyInForeground)
+            Logsene.worker = try Worker(client: client, type: type, maxOfflineMessages: maxOfflineMessages, automaticLocationEnriching: automaticLocationEnriching, useLocationOnlyInForeground: useLocationOnlyInForeground, syncFileSync: syncFileSync)
         } catch (let err) {
             NSLog("Unable to initialize Logsene worker: \(err)")
             maybeError = err
