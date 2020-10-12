@@ -87,7 +87,6 @@ class LogsEventObjectBuffer {
         try? String(contentsOf: self.fileUrl, encoding: .utf8)
             .split(separator: "\n")
             .forEach({ (line) in
-                NSLog("LINE: \(line)")
                 if let obj = try JSONSerialization.jsonObject(with: line.data(using: String.Encoding.utf8)!, options: JSONSerialization.ReadingOptions()) as? JsonObject {
                     docs.enqueue(obj)
                 } else {
