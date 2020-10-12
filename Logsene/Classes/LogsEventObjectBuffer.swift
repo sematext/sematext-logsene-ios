@@ -70,10 +70,16 @@ class LogsEventObjectBuffer {
             if let outputStream = OutputStream(url: self.fileUrl, append: false) {
                 outputStream.open()
                 for index in 1...docs.count {
-                    let stringDoc = String(jsonObject: docs.peekAt(index))!
-                    let numWritten = outputStream.write(stringDoc, maxLength: stringDoc.count)
-                    if numWritten < stringDoc.count {
-                        NSLog("Expected to write more bytes")
+                    var jsonData: NSData!
+                    do {
+                        jsonData = try JSONSerialization.data(withJSONObject: docs.peekAt(index), options: JSONSerialization.WritingOptions()) as NSData
+                        let stringDoc = String(data: jsonData as Data, encoding: String.Encoding.utf8)!
+                        let numWritten = outputStream.write(stringDoc, maxLength: stringDoc.count)
+                        if numWritten < stringDoc.count {
+                            NSLog("Expected to write more bytes")
+                        }
+                    } catch let error as NSError {
+                        NSLog("JSON conversion failed: \(error.localizedDescription)")
                     }
                 }
                 outputStream.close()
