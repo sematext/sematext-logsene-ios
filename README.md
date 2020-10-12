@@ -125,7 +125,7 @@ LogseneResumeSendingLogs()
 
 Note that the logs that are in the buffer and were waiting to be sent at the time of pausing will not be sent until the logs sending process is resumed. 
 
-Buffered data file
+Buffered Data File
 ----------------------------------------
 
 By default the library writes the data to a file called ```logsene.wal``` which stores the raw log messages. It is suggested to force writing of the file when the application is being terminated by calling the ```LogseneTerminate()``` function:
