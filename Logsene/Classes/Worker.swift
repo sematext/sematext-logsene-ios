@@ -102,6 +102,10 @@ class Worker: NSObject {
     func pause() {
         self.isActive = false
     }
+    
+    func flushBuffer() {
+        self.preflightBuffer.forceClose()
+    }
 
     fileprivate func handleNewEvent(_ event: JsonObject) throws {
         preflightBuffer.add(event)

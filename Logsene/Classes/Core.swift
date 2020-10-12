@@ -58,6 +58,16 @@ public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = 
 }
 
 /**
+    Terminates Logsene framework informing the pre-flight buffer that it should be closed.
+ 
+    You will most likely want to call this from your application delegate in [application:applicationWillTerminate:]
+ */
+public func LogseneTerminate() {
+    NSLog("Terminating Logsene to clear the pre-flight buffer")
+    Logsene.worker?.flushBuffer()
+}
+
+/**
     Sets the default meta fields.
 
     Meta fields are included with each event. We include version name, build, OS release, and UUID by default. Call this function to set your own, additional meta fields. For example:

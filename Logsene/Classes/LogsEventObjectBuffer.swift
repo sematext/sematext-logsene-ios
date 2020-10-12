@@ -95,4 +95,8 @@ class LogsEventObjectBuffer {
                 }
             })
     }
+    
+    func forceClose() {
+        self.writeFile()
+    }
 }
