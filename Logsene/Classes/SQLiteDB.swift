@@ -10,7 +10,7 @@ extension DBLogEntry: SQLTable {
     static var createStatement: String {
         return """
             CREATE TABLE LogEntry(
-                Id INT PRIMARY KEY NOT NULL AUTOCINCREMENT,
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Data TEXT NOT NULL
             );
         """
