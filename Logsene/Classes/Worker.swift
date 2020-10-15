@@ -104,7 +104,7 @@ class Worker: NSObject {
     }
 
     fileprivate func handleNewEvent(_ event: JsonObject) throws {
-        preflightBuffer.add(event)
+        try preflightBuffer.add(event)
         
         if preflightBuffer.count >= minBatchSize && isOnline && isActive {
             try sendInBatches()
@@ -127,7 +127,7 @@ class Worker: NSObject {
             let batch = preflightBuffer.peek(maxBatchSize)
             if batch != nil && sendBatch(batch!) {
                 invalidateTimer()
-                preflightBuffer.remove(batch!.count)
+                try preflightBuffer.remove(batch!.count)
             } else {
                 return
             }
