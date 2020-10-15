@@ -25,14 +25,14 @@ class Worker: NSObject {
     fileprivate var isActive: Bool = true
     fileprivate var locationManager: CLLocationManager? = nil
     
-    init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool, syncFileSync: Bool) throws {
+    init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool) throws {
         serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
         reach = Reachability()!
 
         // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        preflightBuffer = try LogsEventObjectBuffer(filePath: "\(path)/logsene.wal", size: maxOfflineMessages, syncFileSync: syncFileSync)
+        preflightBuffer = try LogsEventObjectBuffer(filePath: "\(path)/logsene.sqlite", size: maxOfflineMessages)
 
         self.client = client
         self.type = type
@@ -101,10 +101,6 @@ class Worker: NSObject {
     
     func pause() {
         self.isActive = false
-    }
-    
-    func flushBuffer() {
-        self.preflightBuffer.forceClose()
     }
 
     fileprivate func handleNewEvent(_ event: JsonObject) throws {
