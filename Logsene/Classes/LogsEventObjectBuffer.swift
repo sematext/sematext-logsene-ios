@@ -14,7 +14,7 @@ class LogsEventObjectBuffer {
     var count: Int {
         get {
             if _count == nil {
-                // TODO: retrieve count from DB
+                _count = self.countEntries()
             }
             return _count ?? 0
         }
@@ -33,8 +33,7 @@ class LogsEventObjectBuffer {
     init(filePath: String, size: Int) throws {
         self.size = size
         self.db = try SQLiteDB.open(path: filePath)
-        // TODO: check if the DB table is already there
-        var tablePresent = true
+        let tablePresent = try db.tableExists()
         if !tablePresent {
             try db.createTable(table: DBLogEntry.self)
         }
@@ -56,11 +55,22 @@ class LogsEventObjectBuffer {
         Reads up to `max` objects from the buffer in FIFO order.
     */
     func peek(_ max: Int) -> [JsonObject]? {
-        return [JsonObject]()
+        do {
+            return try db.fetchTopN(count: max)
+        } catch {
+            NSLog("Error while running DB query")
+        }
+        
+        return nil
     }
     
     func countEntries() -> Int {
-        // TODO implement
+        do {
+            return try db.countEntries()
+        } catch {
+            NSLog("Error while running DB count query")
+        }
+        
         return 0
     }
 

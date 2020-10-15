@@ -10,8 +10,8 @@ extension DBLogEntry: SQLTable {
     static var createStatement: String {
         return """
             CREATE TABLE LogEntry(
-                Id INT PRIMARY KEY NOT NULL,
-                Data TEXT
+                Id INT PRIMARY KEY NOT NULL AUTOCINCREMENT,
+                Data TEXT NOT NULL
             );
         """
     }
@@ -60,7 +60,7 @@ class SQLiteDB {
     }
     
     func insertLogEntry(logEntry: DBLogEntry) throws {
-        let insertSql = "INSERT INTO LogEntry (Id, Name) Data (?, ?);"
+        let insertSql = "INSERT INTO LogEntry (Data) VALUES (?);"
         let insertStatement = try prepareStatement(sql: insertSql)
         
         defer {
@@ -69,9 +69,7 @@ class SQLiteDB {
         
         let data: NSString = logEntry.data
         guard
-            sqlite3_bind_int(insertStatement, 1, logEntry.id) == SQLITE_OK  &&
-                sqlite3_bind_text(insertStatement, 2, data.utf8String, -1, nil)
-                == SQLITE_OK
+            sqlite3_bind_text(insertStatement, 1, data.utf8String, -1, nil) == SQLITE_OK
             else {
                 throw SQLiteError.Bind(message: errorMessage)
             }
@@ -81,6 +79,72 @@ class SQLiteDB {
         }
         
         NSLog("Successfully inserted LogEntry row")
+    }
+    
+    func countEntries() throws -> Int {
+        let querySql = "SELECT count(*) from LogEntry;"
+        let queryStatement = try prepareStatement(sql: querySql)
+        
+        defer {
+            sqlite3_finalize(queryStatement)
+        }
+        
+        guard sqlite3_step(queryStatement) == SQLITE_ROW else {
+            return 0
+        }
+        
+        return Int(sqlite3_column_int(queryStatement, 0))
+    }
+    
+    func tableExists() throws -> Bool {
+        let querySql = "SELECT name FROM sqlite_master WHERE type='table' AND name='LogEntry';"
+        let queryStatement = try prepareStatement(sql: querySql)
+        
+        defer {
+            sqlite3_finalize(queryStatement)
+        }
+        
+        if sqlite3_step(queryStatement) == SQLITE_ROW {
+            return true
+        }
+        
+        return false
+    }
+    
+    func fetchTopN(count: Int) throws -> [JsonObject] {
+        let querySql = "SELECT * FROM LogEntry ORDER BY `id` DESC LIMIT ?;"
+        let queryStatement = try prepareStatement(sql: querySql)
+        
+        defer {
+            sqlite3_finalize(queryStatement)
+        }
+        
+        guard sqlite3_bind_int(queryStatement, 1, Int32(count)) == SQLITE_OK
+        else {
+            throw SQLiteError.Bind(message: errorMessage)
+        }
+        
+        var results = [JsonObject]()
+        var continueGathering = true
+        
+        repeat {
+            if sqlite3_step(queryStatement) == SQLITE_ROW {
+                let textData = String(cString: sqlite3_column_text(queryStatement, 1))
+                if let obj = try JSONSerialization.jsonObject(with: textData.data(using: String.Encoding.utf8)!, options: JSONSerialization.ReadingOptions()) as? JsonObject {
+                    results.append(obj)
+                } else {
+                    NSLog("Data in database is not a JsonObject, skipping!")
+                }
+            } else {
+                continueGathering = false
+            }
+        } while continueGathering
+        
+        guard sqlite3_step(queryStatement) == SQLITE_ROW else {
+            return results
+        }
+        
+        return results
     }
     
     func deleteTopN(count: Int) throws {
