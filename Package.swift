@@ -9,13 +9,10 @@ let package = Package(
             name: "Logsene",
             targets: ["Logsene"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.12.2"),
-    ],
     targets: [
         .target(
             name: "Logsene",
-            dependencies: ["SQLite"],
+            dependencies: [],
             path: "Logsene/Classes"),
         .testTarget(
             name: "Example",

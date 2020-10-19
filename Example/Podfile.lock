@@ -2,24 +2,19 @@ PODS:
   - CocoaLumberjack/Core (3.6.1)
   - CocoaLumberjack/Swift (3.6.1):
     - CocoaLumberjack/Core
-  - Logsene (1.1.0):
-    - SQLite.swift (~> 0.12.2)
-  - Nimble (7.3.4)
-  - Quick (1.2.0)
-  - SQLite.swift (0.12.2):
-    - SQLite.swift/standard (= 0.12.2)
-  - SQLite.swift/standard (0.12.2)
+  - Logsene (1.6.0)
+  - Nimble (9.0.0)
+  - Quick (3.0.0)
 
 DEPENDENCIES:
   - CocoaLumberjack/Swift
   - Logsene (from `../`)
-  - Nimble (~> 7.0)
-  - Quick (~> 1.2.0)
+  - Nimble (~> 9.0)
+  - Quick (~> 3.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CocoaLumberjack
-    - SQLite.swift
   trunk:
     - Nimble
     - Quick
@@ -27,14 +22,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Logsene:
     :path: "../"
+    :swift_version: '4.0'
 
 SPEC CHECKSUMS:
   CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
-  Logsene: 9cac5f15d673c7d52aca14561c9cbb88577d844b
-  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
-  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  Logsene: e537b4158aff29cabd9be050aabda5d7d35f0cc1
+  Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
 
-PODFILE CHECKSUM: 7fe3a099a17584af3faf297507a37c184e420cbf
+PODFILE CHECKSUM: 24ea5f0942d1fdc3553f9c0e04fa216ae7938808
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

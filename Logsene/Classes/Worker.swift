@@ -15,7 +15,7 @@ class Worker: NSObject {
     fileprivate let maxBatchSize = 50
     fileprivate let minBatchSize = 10
     fileprivate let timeTriggerSec = 60
-    fileprivate let preflightBuffer: SqliteObjectBuffer
+    fileprivate let preflightBuffer: LogsEventObjectBuffer
     fileprivate let serialQueue: DispatchQueue
     fileprivate var timer: DispatchSourceTimer
     fileprivate let client: LogseneClient
@@ -29,10 +29,10 @@ class Worker: NSObject {
         serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
         reach = Reachability()!
 
-        // Setup sqlite buffer for storing messages before sending them to Logsene
+        // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        preflightBuffer = try SqliteObjectBuffer(filePath: "\(path)/logsene.sqlite3", size: maxOfflineMessages)
+        preflightBuffer = try LogsEventObjectBuffer(filePath: "\(path)/logsene.sqlite", size: maxOfflineMessages)
 
         self.client = client
         self.type = type
@@ -124,10 +124,10 @@ class Worker: NSObject {
 
     fileprivate func sendInBatches() throws {
         while preflightBuffer.count > 0 {
-            let batch = try preflightBuffer.peek(maxBatchSize)
-            if sendBatch(batch) {
+            let batch = preflightBuffer.peek(maxBatchSize)
+            if batch != nil && sendBatch(batch!) {
                 invalidateTimer()
-                try preflightBuffer.remove(batch.count)
+                try preflightBuffer.remove(batch!.count)
             } else {
                 return
             }
@@ -193,8 +193,8 @@ extension Worker: CLLocationManagerDelegate {
         #if os(macOS)
         #else
         if locations.first != nil {
-            self.currentLatitude = locations.first?.coordinate.latitude.datatypeValue
-            self.currentLongitude = locations.first?.coordinate.longitude.datatypeValue
+            self.currentLatitude = locations.first?.coordinate.latitude
+            self.currentLongitude = locations.first?.coordinate.longitude
             if (self.currentLongitude != 0.0 && self.currentLatitude != 0.0) {
                 self.locationSet = true
             }
