@@ -2,22 +2,15 @@ PODS:
   - CocoaLumberjack/Core (3.6.1)
   - CocoaLumberjack/Swift (3.6.1):
     - CocoaLumberjack/Core
-  - Logsene (1.6.0)
-  - Nimble (9.0.0)
-  - Quick (3.0.0)
+  - Logsene (1.6.1)
 
 DEPENDENCIES:
   - CocoaLumberjack/Swift
   - Logsene (from `../`)
-  - Nimble (~> 9.0)
-  - Quick (~> 3.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CocoaLumberjack
-  trunk:
-    - Nimble
-    - Quick
 
 EXTERNAL SOURCES:
   Logsene:
@@ -26,10 +19,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
-  Logsene: e537b4158aff29cabd9be050aabda5d7d35f0cc1
-  Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
-  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  Logsene: afed1d1d48881f9c5d8261e75caf74d806ffc1b4
 
-PODFILE CHECKSUM: 24ea5f0942d1fdc3553f9c0e04fa216ae7938808
+PODFILE CHECKSUM: 6216c40be1df587984d8c9469884a257bbac56af
 
 COCOAPODS: 1.9.3

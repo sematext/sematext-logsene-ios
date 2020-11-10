@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Logsene'
-  s.version          = '1.6.0'
+  s.version          = '1.6.1'
   s.summary          = 'Sematext Cloud Logs is ELK as a Service. This library lets you collect mobile analytics and log data from your iOS applications.'
 
   s.description      = <<-DESC
@@ -25,6 +25,8 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '12.0'
   s.osx.deployment_target = '10.10'
+  s.tvos.deployment_target = '12.0'
+  s.watchos.deployment_target = '5.0'
   s.source_files = 'Logsene/Classes/**/*'
   
   s.swift_versions = ['4.0', '4.1', '4.2', '5.0', '5.1', '5.2']
