@@ -180,6 +180,7 @@ class Worker: NSObject {
 
 extension Worker: CLLocationManagerDelegate {
     #if os(macOS)
+    #elseif os(tvOS)
     #else
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         NSLog("Setting location to %d %d", Double(visit.coordinate.latitude),  Double(visit.coordinate.longitude))
@@ -191,6 +192,7 @@ extension Worker: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         #if os(macOS)
+        #elseif os(tvOS)
         #else
         if locations.first != nil {
             self.currentLatitude = locations.first?.coordinate.latitude
@@ -208,6 +210,7 @@ extension Worker: CLLocationManagerDelegate {
     
     func readInitialLocation() {
         #if os(macOS)
+        #elseif os(tvOS)
         #else
         NSLog("Reading initial location")
         if #available(iOS 9.0, *) {
