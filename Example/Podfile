@@ -11,9 +11,6 @@ target 'Logsene_Example' do
 
   target 'Logsene_Tests' do
     inherit! :search_paths
-
-    pod 'Quick', '~> 3.0'
-    pod 'Nimble', '~> 9.0'
   end
 end
 
