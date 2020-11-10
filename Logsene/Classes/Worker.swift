@@ -46,6 +46,7 @@ class Worker: NSObject {
         
         // setup location manager if needed - this should be done only for iOS
         #if os(macOS)
+        #elseif os(tvOS)
         #else
         if automaticLocationEnriching {
             self.locationManager = CLLocationManager()
