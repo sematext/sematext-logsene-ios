@@ -20,15 +20,23 @@ class Worker: NSObject {
     fileprivate var timer: DispatchSourceTimer
     fileprivate let client: LogseneClient
     fileprivate let type: String
+    #if os(watchOS)
+    #else
     fileprivate let reach: Reachability
+    #endif
     fileprivate var isOnline: Bool = true
     fileprivate var isActive: Bool = true
+    #if os(iOS)
     fileprivate var locationManager: CLLocationManager? = nil
+    #endif
     
     init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool) throws {
         serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
+        #if os(watchOS)
+        #else
         reach = Reachability()!
-
+        #endif
+        
         // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -45,9 +53,7 @@ class Worker: NSObject {
         super.init()
         
         // setup location manager if needed - this should be done only for iOS
-        #if os(macOS)
-        #elseif os(tvOS)
-        #else
+        #if os(iOS)
         if automaticLocationEnriching {
             self.locationManager = CLLocationManager()
             self.locationManager?.delegate = self
@@ -72,6 +78,9 @@ class Worker: NSObject {
         timer.resume()
 
         // Setup Reachability to notify when device is online/offline
+        // Except for watchOS
+        #if os(watchOS)
+        #else
         reach.whenReachable = { (reach) in
             self.serialQueue.async {
                 self.isOnline = true
@@ -84,6 +93,7 @@ class Worker: NSObject {
         }
         
         try reach.startNotifier()
+        #endif
     }
 
     func addToQueue(_ event: JsonObject) {
@@ -179,22 +189,16 @@ class Worker: NSObject {
     }
 }
 
+#if os(iOS)
 extension Worker: CLLocationManagerDelegate {
-    #if os(macOS)
-    #elseif os(tvOS)
-    #else
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         NSLog("Setting location to %d %d", Double(visit.coordinate.latitude),  Double(visit.coordinate.longitude))
         self.locationSet = true
         self.currentLatitude = Double(visit.coordinate.latitude)
         self.currentLongitude = Double(visit.coordinate.longitude)
     }
-    #endif
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        #if os(macOS)
-        #elseif os(tvOS)
-        #else
         if locations.first != nil {
             self.currentLatitude = locations.first?.coordinate.latitude
             self.currentLongitude = locations.first?.coordinate.longitude
@@ -202,7 +206,6 @@ extension Worker: CLLocationManagerDelegate {
                 self.locationSet = true
             }
         }
-        #endif
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -210,13 +213,10 @@ extension Worker: CLLocationManagerDelegate {
     }
     
     func readInitialLocation() {
-        #if os(macOS)
-        #elseif os(tvOS)
-        #else
         NSLog("Reading initial location")
         if #available(iOS 9.0, *) {
             self.locationManager?.requestLocation()
         }
-        #endif
     }
 }
+#endif

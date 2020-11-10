@@ -207,6 +207,11 @@ private func enrichEvent(_ event: inout JsonObject) {
         meta["osRelease"] = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
         #if os(macOS)
         meta["osType"] = "MacOS"
+        #elseif os(watchOS)
+        meta["osType"] = "watchOS"
+        #elseif os(tvOS)
+        meta["osType"] = "tvOS"
+        meta["uuid"] = UIDevice.current.identifierForVendor!.uuidString
         #else
         meta["osType"] = "iOS"
         meta["uuid"] = UIDevice.current.identifierForVendor!.uuidString
