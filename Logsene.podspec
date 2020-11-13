@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/sematext'
 
   s.ios.deployment_target = '12.0'
-  s.osx.deployment_target = '10.10'
+  s.osx.deployment_target = '10.12'
   s.tvos.deployment_target = '12.0'
   s.watchos.deployment_target = '5.0'
   s.source_files = 'Logsene/Classes/**/*'
