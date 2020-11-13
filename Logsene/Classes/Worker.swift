@@ -37,7 +37,7 @@ class Worker: NSObject {
         
         // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
-        preflightBuffer = try FileStorage(logsFilePath: "sematextLogsStorage", maxFileSize: 1000000, maxNumberOfFiles: 10)
+        preflightBuffer = try FileStorage(logsFilePath: "sematextLogsStorage", maxFileSize: 100000, maxNumberOfFiles: 10)
         
         self.client = client
         self.type = type
@@ -141,15 +141,13 @@ class Worker: NSObject {
         if force {
             preflightBuffer.rollFile()
         }
-        while preflightBuffer.hasDataForSending() {
-            let file = try preflightBuffer.getFilesInDirectory().first
-            if file != nil && !preflightBuffer.isFileCurrentlyUsed(file: file!) {
-                let batch = preflightBuffer.getObjectsFromFile(file: file!)
+        let files = try preflightBuffer.getFilesInDirectory()
+        for file in files {
+            if !preflightBuffer.isFileCurrentlyUsed(file: file) {
+                let batch = preflightBuffer.getObjectsFromFile(file: file)
                 if batch != nil && batch!.count > 0 && sendBatch(batch!) {
                     invalidateTimer()
-                    try preflightBuffer.deleteFile(file: file!)
-                } else {
-                    return
+                    try preflightBuffer.deleteFile(file: file)
                 }
             }
         }
