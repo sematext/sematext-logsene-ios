@@ -92,15 +92,19 @@ class FileStorage {
     private func cleanUp() throws {
         NSLog("Starting log files directory cleanup")
         let files = try self.logsDirectory.listFiles()
-        let sortedFiles = files.sorted { (first, second) -> Bool in
-            first.name == second.name
-        }
         var numFilesToDelete = files.count - maxNumberOfFiles + 1
-        for file in sortedFiles {
-            if currentlyUsedFileName != file.name && numFilesToDelete > 0 {
-                numFilesToDelete -= 1
-                try deleteFile(file: file)
+        if (numFilesToDelete > 0) {
+            let sortedFiles = files.sorted { (first, second) -> Bool in
+                first.name == second.name
             }
+            for file in sortedFiles {
+                if currentlyUsedFileName != file.name && numFilesToDelete > 0 {
+                    numFilesToDelete -= 1
+                    try deleteFile(file: file)
+                }
+            }
+        } else {
+            NSLog("Nothing needs to be cleaned, skipping")
         }
     }
     
