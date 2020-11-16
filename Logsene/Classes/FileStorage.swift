@@ -78,9 +78,13 @@ class FileStorage {
     }
     
     // Deletes file
-    func deleteFile(file: File) throws {
-        NSLog("Deleting file \(file.name)")
-        try file.delete()
+    func deleteFile(file: File) {
+        do {
+            NSLog("Deleting file \(file.name)")
+            try file.delete()
+        } catch {
+            NSLog("Error while deleting file: \(file.name)")
+        }
     }
     
     // Returns size of the currently used file
@@ -100,7 +104,7 @@ class FileStorage {
             for file in sortedFiles {
                 if currentlyUsedFileName != file.name && numFilesToDelete > 0 {
                     numFilesToDelete -= 1
-                    try deleteFile(file: file)
+                    deleteFile(file: file)
                 }
             }
         } else {

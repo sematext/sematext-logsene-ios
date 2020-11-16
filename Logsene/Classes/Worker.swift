@@ -147,7 +147,7 @@ class Worker: NSObject {
                 let batch = preflightBuffer.getObjectsFromFile(file: file)
                 if batch != nil && batch!.count > 0 && sendBatch(batch!) {
                     invalidateTimer()
-                    try preflightBuffer.deleteFile(file: file)
+                    preflightBuffer.deleteFile(file: file)
                 }
             }
         }
