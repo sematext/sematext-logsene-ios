@@ -90,7 +90,7 @@ class FileStorage {
     
     // Cleans up logs data directory deleting files that are not needed
     private func cleanUp() throws {
-        NSLog("Cleaning up log files directory")
+        NSLog("Starting log files directory cleanup")
         let files = try self.logsDirectory.listFiles()
         let sortedFiles = files.sorted { (first, second) -> Bool in
             first.name == second.name
