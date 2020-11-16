@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // NOTE: Set your token below
-        try! LogseneInit("<your-token>", type: "example")
+        try! LogseneInit("bf31f392-ac96-41b3-a865-b03673821ca5", type: "example")
         
         // Here we setup CocoaLumberjack to log to both XCode console and Logsene
         DDLog.add(DDTTYLogger.sharedInstance!)
