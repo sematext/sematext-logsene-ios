@@ -95,20 +95,24 @@ class FileStorage {
     // Cleans up logs data directory deleting files that are not needed
     private func cleanUp() throws {
         NSLog("Starting log files directory cleanup")
-        let files = try self.logsDirectory.listFiles()
-        var numFilesToDelete = files.count - maxNumberOfFiles + 1
-        if (numFilesToDelete > 0) {
-            let sortedFiles = files.sorted { (first, second) -> Bool in
-                first.name == second.name
-            }
-            for file in sortedFiles {
-                if currentlyUsedFileName != file.name && numFilesToDelete > 0 {
-                    numFilesToDelete -= 1
-                    deleteFile(file: file)
+        do {
+            let files = try self.logsDirectory.listFiles()
+            var numFilesToDelete = files.count - maxNumberOfFiles + 1
+            if (numFilesToDelete > 0) {
+                let sortedFiles = files.sorted { (first, second) -> Bool in
+                    first.name == second.name
                 }
+                for file in sortedFiles {
+                    if currentlyUsedFileName != file.name && numFilesToDelete > 0 {
+                        numFilesToDelete -= 1
+                        deleteFile(file: file)
+                    }
+                }
+            } else {
+                NSLog("Nothing needs to be cleaned, skipping")
             }
-        } else {
-            NSLog("Nothing needs to be cleaned, skipping")
+        } catch {
+            NSLog("Error during files cleanup, skipping")
         }
     }
     
@@ -121,7 +125,7 @@ class FileStorage {
         let newLogsFileName = getNextFileName()
         self.currentlyUsedFileName = newLogsFileName
         self.currentLogsFile = try self.logsDirectory.createFile(named: newLogsFileName)
-        try cleanUp()
+        cleanUp()
     }
     
     private func getNextFileName() -> String {
