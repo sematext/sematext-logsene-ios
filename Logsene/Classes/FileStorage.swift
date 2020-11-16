@@ -93,7 +93,7 @@ class FileStorage {
     }
     
     // Cleans up logs data directory deleting files that are not needed
-    private func cleanUp() throws {
+    private func cleanUp() {
         NSLog("Starting log files directory cleanup")
         do {
             let files = try self.logsDirectory.listFiles()
