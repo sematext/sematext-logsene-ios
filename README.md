@@ -58,7 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-You can optionaly provide the `receiverUrl` parameter if you are using [Sematext Enterprise](https://sematext.com/enterprise), and `maxOfflineMessages` to configure how many messages are stored while device is offline (5,000 by default).
+Additional options are available:
+ - the `receiverUrl` parameter allows specifying the data reciver if you are using our EU location or [Sematext Enterprise](https://sematext.com/enterprise)
+ - the `automaticLocationEnriching` parameter enabled automatic enrichment of logs from the mobile application with location data
+- offline storage size can be configured by using the `maxOfflineFileSize` (100000 by default) and `maxOfflineFiles` (10 by default) parameters. The size of the offline storage will be equal to `maxOfflineFileSize` multiplied by `maxOfflineFiles`.
 
 **Note**: We highly recommend creating a write-only token in your application settings for use in your mobile apps.
 

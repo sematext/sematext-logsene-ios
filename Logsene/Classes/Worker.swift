@@ -28,7 +28,8 @@ class Worker: NSObject {
     fileprivate var locationManager: CLLocationManager? = nil
     #endif
     
-    init(client: LogseneClient, type: String, maxOfflineMessages: Int, automaticLocationEnriching: Bool, useLocationOnlyInForeground: Bool) throws {
+    init(client: LogseneClient, type: String, maxOfflineFileSize: Int, maxOfflineFiles: Int, automaticLocationEnriching: Bool,
+         useLocationOnlyInForeground: Bool) throws {
         serialQueue = DispatchQueue(label: "logworker_events", attributes: [])
         #if os(watchOS)
         #else
@@ -37,7 +38,7 @@ class Worker: NSObject {
         
         // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
-        preflightBuffer = try FileStorage(logsFilePath: "sematextLogsStorage", maxFileSize: 100000, maxNumberOfFiles: 10)
+        preflightBuffer = try FileStorage(logsFilePath: "sematextLogsStorage", maxFileSize: maxOfflineFileSize, maxNumberOfFiles: maxOfflineFiles)
         
         self.client = client
         self.type = type

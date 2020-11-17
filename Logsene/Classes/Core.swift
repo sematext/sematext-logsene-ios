@@ -40,16 +40,17 @@ public class LogsLocation {
         - appToken: Your Logsene application token.
         - type: The Elasticsearch type to use for all events.
         - receiverUrl: The receiver url (optional).
-        - maxOfflineMessages: The maximum number of messages (5,000 by default) stored while device is offline (optional).
+        - maxOfflineFileSize: The maximum size of a single file used for offline storage (optional, 100000 by default).
+        - maxOfflineFiles: The maximum number of files used for offline storage (optional, 10 by default).
         - automaticLocationEnriching: When set to true the library will automatically enrich log events with location of the user (optional, false by default).
         - useLocationOnlyInForeground: When set to true the location data will only be used when the application is in foreground (optional, true by default).
 */
-public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineMessages: Int = 5000, automaticLocationEnriching: Bool = false, useLocationOnlyInForeground: Bool = true) throws {
+public func LogseneInit(_ appToken: String, type: String, receiverUrl: String = "https://logsene-receiver.sematext.com", maxOfflineFileSize: Int = 100000, maxOfflineFiles: Int = 10, automaticLocationEnriching: Bool = false, useLocationOnlyInForeground: Bool = true) throws {
     var maybeError: Error? = nil
     DispatchQueue.once(token: Logsene.onceToken) {
         let client = LogseneClient(receiverUrl: receiverUrl, appToken: appToken, configuration: URLSessionConfiguration.default)
         do {
-            Logsene.worker = try Worker(client: client, type: type, maxOfflineMessages: maxOfflineMessages, automaticLocationEnriching: automaticLocationEnriching, useLocationOnlyInForeground: useLocationOnlyInForeground)
+            Logsene.worker = try Worker(client: client, type: type, maxOfflineFileSize: maxOfflineFileSize, maxOfflineFiles: maxOfflineFiles, automaticLocationEnriching: automaticLocationEnriching, useLocationOnlyInForeground: useLocationOnlyInForeground)
         } catch (let err) {
             NSLog("Unable to initialize Logsene worker: \(err)")
             maybeError = err
