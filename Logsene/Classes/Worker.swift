@@ -12,10 +12,8 @@ class Worker: NSObject {
     var currentLatitude: Double? = 0.0
     var currentLongitude: Double? = 0.0
     
-    fileprivate let maxBatchSize = 50
-    fileprivate let minBatchSize = 10
     fileprivate let timeTriggerSec = 60
-    fileprivate let preflightBuffer: LogsEventObjectBuffer
+    fileprivate let preflightBuffer: FileStorage
     fileprivate let serialQueue: DispatchQueue
     fileprivate var timer: DispatchSourceTimer
     fileprivate let client: LogseneClient
@@ -39,9 +37,8 @@ class Worker: NSObject {
         
         // Setup buffer for storing messages before sending them to Logsene
         // This also acts as the offline buffer if device is not online
-        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        preflightBuffer = try LogsEventObjectBuffer(filePath: "\(path)/logsene.sqlite", size: maxOfflineMessages)
-
+        preflightBuffer = try FileStorage(logsFilePath: "sematextLogsStorage", maxFileSize: 100000, maxNumberOfFiles: 10)
+        
         self.client = client
         self.type = type
         
@@ -94,6 +91,12 @@ class Worker: NSObject {
         
         try reach.startNotifier()
         #endif
+        
+        // It may happen that there are files that were saved, but not yet sent.
+        // We should try sending them before we continue and if we are online and active.
+        if preflightBuffer.hasDataForSending() && isOnline && isActive{
+            try sendInBatches(force: false)
+        }
     }
 
     func addToQueue(_ event: JsonObject) {
@@ -117,14 +120,14 @@ class Worker: NSObject {
     fileprivate func handleNewEvent(_ event: JsonObject) throws {
         try preflightBuffer.add(event)
         
-        if preflightBuffer.count >= minBatchSize && isOnline && isActive {
-            try sendInBatches()
+        if isOnline && isActive {
+            try sendInBatches(force: false)
         }
     }
 
     fileprivate func handleTimerTick() throws {
         if isOnline && isActive {
-            try sendInBatches()
+            try sendInBatches(force: true)
         }
     }
 
@@ -133,14 +136,19 @@ class Worker: NSObject {
         timer.schedule(deadline: .now() + .seconds(timeTriggerSec), repeating: .seconds(timeTriggerSec), leeway: .seconds(1))
     }
 
-    fileprivate func sendInBatches() throws {
-        while preflightBuffer.count > 0 {
-            let batch = preflightBuffer.peek(maxBatchSize)
-            if batch != nil && sendBatch(batch!) {
-                invalidateTimer()
-                try preflightBuffer.remove(batch!.count)
-            } else {
-                return
+    fileprivate func sendInBatches(force: Bool) throws {
+        // if this is force sending, we should roll the file and continue
+        if force {
+            preflightBuffer.rollFile()
+        }
+        let files = try preflightBuffer.getFilesInDirectory()
+        for file in files {
+            if !preflightBuffer.isFileCurrentlyUsed(file: file) {
+                let batch = preflightBuffer.getObjectsFromFile(file: file)
+                if batch != nil && batch!.count > 0 && sendBatch(batch!) {
+                    invalidateTimer()
+                    preflightBuffer.deleteFile(file: file)
+                }
             }
         }
     }

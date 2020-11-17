@@ -17,7 +17,7 @@ Use the **Mobile Application Logs** Integration to get out-of-the-box reports wi
 
 Get an overview of your mobile apps with information like:
  - top iOS versions
- - top log severities and version names
+ - top log severity and version names
 
 ![Mobile Logpack Overview](images/mobile_overview.png)
 
@@ -30,7 +30,7 @@ Explore the common errors associated with your mobile applications and see an ag
 
 Get insights from dedicated iOS report that include:
  - mobile operating system logs count histogram and their count
- - top severities, versions, version codes, and version names
+ - top severity, versions, version codes, and version names
  - mobile applications log events
 
 ![Mobile Logpack iOS](images/mobile_ios.png)

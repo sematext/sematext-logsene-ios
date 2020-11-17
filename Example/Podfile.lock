@@ -2,7 +2,7 @@ PODS:
   - CocoaLumberjack/Core (3.6.1)
   - CocoaLumberjack/Swift (3.6.1):
     - CocoaLumberjack/Core
-  - Logsene (1.6.1)
+  - Logsene (1.7.0)
 
 DEPENDENCIES:
   - CocoaLumberjack/Swift
@@ -19,8 +19,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
-  Logsene: afed1d1d48881f9c5d8261e75caf74d806ffc1b4
+  Logsene: 76f6aa4844a35d362c25e8bef3b710a218f3255d
 
 PODFILE CHECKSUM: 6216c40be1df587984d8c9469884a257bbac56af
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

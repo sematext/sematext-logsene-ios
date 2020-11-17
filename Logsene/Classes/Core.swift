@@ -8,6 +8,11 @@ import UIKit
 /// Alias for dictionary String:AnyObject, but must be a valid json object (enforced in LLogEvent()).
 public typealias JsonObject = [String: Any]
 
+/// General error
+enum SematextLogsError: Error {
+    case runtimeError(String)
+}
+
 /// Holds static information.
 struct Logsene {
     static var worker: Worker?
