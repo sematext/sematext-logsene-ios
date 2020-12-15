@@ -67,7 +67,9 @@ internal struct File {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             return attributes[.size] as? UInt64 ?? 0
         } catch {
+            #if DEBUG
             NSLog("Error reading current log file size")
+            #endif
         }
         return 0
     }
