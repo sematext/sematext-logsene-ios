@@ -159,7 +159,9 @@ class Worker: NSObject {
         for source in batch {
             documents.append((source: String(jsonObject: source)!, type: type))
         }
+        #if DEBUG
         NSLog("Attempting to send bulk data to logsene")
+        #endif
         return attemptExecute(BulkIndex(documents: documents), attempts: 3)
     }
 
