@@ -21,7 +21,6 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'Apache 2.0', :file => 'LICENSE.md' }
   s.author           = { 'Sematext Group, Inc.' => 'pods@sematext.com' }
   s.source           = { :git => 'https://github.com/sematext/sematext-logsene-ios.git', :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/sematext'
 
   s.ios.deployment_target = '12.0'
   s.osx.deployment_target = '10.12'
