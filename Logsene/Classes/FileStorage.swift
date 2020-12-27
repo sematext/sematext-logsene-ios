@@ -53,9 +53,6 @@ class FileStorage {
     
     // Rolls file creating new one
     func rollFile() {
-        #if DEBUG
-        NSLog("Rolling file")
-        #endif
         do {
             try openNewLogsFile()
         } catch {
@@ -84,9 +81,6 @@ class FileStorage {
     // Deletes file
     func deleteFile(file: File) {
         do {
-            #if DEBUG
-            NSLog("Deleting file \(file.name)")
-            #endif
             try file.delete()
         } catch {
             #if DEBUG
@@ -102,9 +96,6 @@ class FileStorage {
     
     // Cleans up logs data directory deleting files that are not needed
     private func cleanUp() {
-        #if DEBUG
-        NSLog("Starting log files directory cleanup")
-        #endif
         do {
             let files = try self.logsDirectory.listFiles()
             var numFilesToDelete = files.count - maxNumberOfFiles + 1
@@ -118,10 +109,6 @@ class FileStorage {
                         deleteFile(file: file)
                     }
                 }
-            } else {
-                #if DEBUG
-                NSLog("Nothing needs to be cleaned, skipping")
-                #endif
             }
         } catch {
             #if DEBUG
@@ -135,9 +122,6 @@ class FileStorage {
     }
     
     private func openNewLogsFile() throws {
-        #if DEBUG
-        NSLog("Opening new logs file")
-        #endif
         let newLogsFileName = getNextFileName()
         self.currentlyUsedFileName = newLogsFileName
         self.currentLogsFile = try self.logsDirectory.createFile(named: newLogsFileName)
