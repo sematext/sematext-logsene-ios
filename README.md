@@ -11,24 +11,24 @@ SDK for Shipping iOS Application Logs to Sematext
 [![License](https://img.shields.io/cocoapods/l/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
 [![Platform](https://img.shields.io/cocoapods/p/Logsene.svg?style=flat)](http://cocoapods.org/pods/Logsene)
 
-[Sematext Logs is ELK as a Service][logsene]. This library lets you collect **mobile analytics** and **log data** from your iOS applications using Sematext. There is an equivalent library for [shipping logs from Android](https://github.com/sematext/sematext-logsene-android) available. If you don't have a Sematext account, you can [register for free][register] to get your App token.
+[Sematext Logs is ELK as a Service][logsene]. This library lets you collect **mobile analytics** and **log data** from your **iOS and WatchOS** applications using Sematext. There is an equivalent library for [shipping logs from Android](https://github.com/sematext/sematext-logsene-android) available. If you don't have a Sematext account, you can [register for free][register] to get your App token.
 
 Use the **Mobile Application Logs** Integration to get out-of-the-box reports with the most important information about your mobile applications.
 
 Get an overview of your mobile apps with information like:
- - top iOS versions
+ - top iOS and WatchOS versions
  - top log severity and version names
 
 ![Mobile Logpack Overview](images/mobile_overview.png)
 
 Explore the common errors associated with your mobile applications and see an aggregated error view including:
  - number of errors and theirs count over time
- - top operating systems, top iOS versions that are reporting errors
+ - top operating systems, top iOS and WatchOS versions that are reporting errors
  - error log events
 
 ![Mobile Logpack Errors](images/mobile_errors.png)
 
-Get insights from dedicated iOS report that include:
+Get insights from dedicated iOS / WatchOS reports that include:
  - mobile operating system logs count histogram and their count
  - top severity, versions, version codes, and version names
  - mobile applications log events
@@ -38,7 +38,7 @@ Get insights from dedicated iOS report that include:
 Getting Started
 ---------------
 
-1. Logsene log shipping library for iOS is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
+1. Logsene log shipping library for iOS and WatchOS is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod "Logsene"
@@ -99,9 +99,9 @@ A few predefined meta fields are included in each event sent to Sematext. The fi
 
 - versionName (app version string, eg. 1.0)
 - versionCode (app build number, eg. 92)
-- osRelease (iOS version, eg. 9.3.0)
+- osRelease (iOS or WatchOS version, eg. 9.3.0)
 - uuid (device identifier)
-- OS type (iOS)
+- OS type (iOS or WatchOS)
 
 You can set your own meta fields with `LogseneSetDefaultMeta`. For example:
 
@@ -153,7 +153,7 @@ let location = LogsLocation(fromLatitude: 53.13, fromLongitude: 23.16)
 LLogInfo(withMessage: "hello world with location!", withLocation: location)
 ```
 
-#### Automatically enrich logs with location data on iOS
+#### Automatically enrich logs with location data on iOS and WatchOS
 
 If you would like to allow the library to automatically enrich log data with the location data it is as easy as properly initializing the library, for example:
 
@@ -169,7 +169,7 @@ There are two properties here:
  * **Privacy - Location Always and When In Use Usage Description** 
  * **Privacy - Location When In Use Usage Description**
 
-**Automatic location enriching only works with iOS, not MacOS.** 
+**Automatic location enriching only works with iOS and WatchOS, not MacOS.** 
 
 For integrating with existing logging frameworks, see below.
 
