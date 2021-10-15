@@ -1,9 +1,15 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
 let package = Package(
     name: "Logsene",
+    platforms: [
+        .iOS(.v12),
+        .macOS(.v10_12),
+        .tvOS(.v12),
+        .watchOS(.v5)
+    ],
     products: [
         .library(
             name: "Logsene",
@@ -13,10 +19,6 @@ let package = Package(
         .target(
             name: "Logsene",
             dependencies: [],
-            path: "Logsene/Classes"),
-        .testTarget(
-            name: "Example",
-            dependencies: ["Logsene"],
-            path: "Example/Logsene"),
+            path: "Logsene/Classes")
     ]
 )
