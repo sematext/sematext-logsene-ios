@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ```
 
 Additional options are available:
- - the `receiverUrl` parameter allows specifying the data reciver if you are using our EU location or [Sematext Enterprise](https://sematext.com/enterprise)
+ - the `receiverUrl` parameter allows specifying the data reciver if you are using our EU location
  - the `automaticLocationEnriching` parameter enabled automatic enrichment of logs from the mobile application with location data
 - offline storage size can be configured by using the `maxOfflineFileSize` (100000 by default) and `maxOfflineFiles` (10 by default) parameters. The size of the offline storage will be equal to `maxOfflineFileSize` multiplied by `maxOfflineFiles`.
 
@@ -86,7 +86,7 @@ You can collect application analytics using Sematext. To do that, use the `LLogE
 LLogEvent(["event": "level_completed", "message": "Level 3 completed", "value": "3"])
 ```
 
-To visualize the collected data, you would use the [integrated Kibana dashboard][hosted-kibana].
+To visualize the collected data use [Sematext dashboards](https://sematext.com/docs/dashboards/).
 
 If you don't see the events in the dashboard immediately, note that this library sends data in batches to preserve the battery (every 60s), or if there are more than 10 messages queued up. Messages are saved while the device is offline, so you don't have to worry about losing any data.
 
